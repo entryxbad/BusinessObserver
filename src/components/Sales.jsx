@@ -1,4 +1,3 @@
-import React from 'react'
 import {Text, View} from 'react-native'
 import {BanknotesIcon} from 'react-native-heroicons/outline'
 

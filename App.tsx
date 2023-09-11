@@ -1,9 +1,9 @@
-import MainScreen from './src/screens/MainScreen'
+import Navigation from './src/components/navigation/Navigation'
 
 const App = () => {
   return (
     <>
-      <MainScreen />
+      <Navigation />
     </>
   )
 }
