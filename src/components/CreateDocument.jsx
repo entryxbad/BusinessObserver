@@ -1,7 +1,7 @@
 import {Text, TouchableOpacity, View} from 'react-native'
 import {DocumentTextIcon} from 'react-native-heroicons/outline'
 
-const Documents = () => {
+const CreateDocument = () => {
   return (
     <View className="flex-1 bg-white border border-gray-300 m-1 py-5">
       <View className="flex-1 px-5 space-y-10 justify-center">
@@ -17,4 +17,4 @@ const Documents = () => {
   )
 }
 
-export default Documents
+export default CreateDocument

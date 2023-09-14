@@ -8,8 +8,7 @@ import {DocumentTextIcon} from 'react-native-heroicons/outline'
 import {InboxArrowDownIcon} from 'react-native-heroicons/outline'
 
 import Balance from '../Balance'
-import Documents from '../Documents'
-import Expense from '../Expense'
+import Consumption from '../Consumption'
 import Header from '../Header'
 import Receipts from '../Receipts'
 import Sales from '../Sales'
@@ -21,10 +20,9 @@ const HomeScreen = () => {
     <View className="bg-[#f5f5f5] flex-1 relative">
       <Header />
       <ScrollView>
-        <Documents />
         <Balance />
         <Receipts />
-        <Expense />
+        <Consumption />
         <Sales />
       </ScrollView>
     </View>
@@ -84,7 +82,7 @@ const Navigation = () => (
           tabBarIcon: () => <CalendarDaysIcon color={'black'} size={28} />,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Messenger"
         component={MessengerScreen}
         options={{
@@ -112,7 +110,7 @@ const Navigation = () => (
           tabBarLabel: () => null,
           tabBarIcon: () => <InboxArrowDownIcon color={'black'} size={28} />,
         }}
-      />
+      /> */}
     </Tab.Navigator>
   </NavigationContainer>
 )

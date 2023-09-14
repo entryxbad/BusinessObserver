@@ -22,7 +22,7 @@ const Balance = () => {
 
   const handleRefresh = () => {
     updateBalance()
-    console.log(balance[0])
+    console.log(balance)
   }
 
   return (
@@ -30,9 +30,14 @@ const Balance = () => {
     <View className="flex-1 bg-white border border-gray-300 m-1 py-5">
       {/* Header */}
       <View className="space-y-4 px-5">
-        <View className="flex-row items-center space-x-2">
-          <CircleStackIcon color={'black'} size={18} />
-          <Text className="text-sm text-[#b2b2b2]">Остаток</Text>
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row space-x-2">
+            <CircleStackIcon color={'black'} size={18} />
+            <Text className="text-sm text-[#b2b2b2]">Остаток</Text>
+          </View>
+          <TouchableOpacity>
+            <Text>Подробно</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Column division */}
@@ -40,9 +45,7 @@ const Balance = () => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-black">
-              {balance.length && balance[0]
-                ? balance[0].СуммаОстаток
-                : '100 000'}{' '}
+              {balance.length && balance[0] ? balance[0].balance : 'Нет данных'}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
@@ -53,9 +56,7 @@ const Balance = () => {
           {/* Second col */}
           <View className="flex-1 pl-5">
             <Text className="text-lg font-bold text-black">
-              {balance.length && balance[0]
-                ? balance[0].СуммаОстаток
-                : '456 125'}{' '}
+              {balance.length && balance[1] ? balance[1].balance : 'Нет данных'}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>

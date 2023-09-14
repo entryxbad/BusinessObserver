@@ -1,15 +1,38 @@
-import {Text, View} from 'react-native'
+import {useEffect, useState} from 'react'
+import {Text, TouchableOpacity, View} from 'react-native'
 import {CreditCardIcon} from 'react-native-heroicons/outline'
 
+import {fetchReceipts} from '../config/api'
+
 const Receipts = () => {
+  const [receipts, setReceipts] = useState(0)
+
+  const updateReceipts = async () => {
+    try {
+      const response = await fetchReceipts()
+      setReceipts(response)
+    } catch (error) {
+      console.log('Error from Receipts.jsx:', error)
+    }
+  }
+
+  useEffect(() => {
+    updateReceipts()
+  }, [])
+
   return (
     // Main block
     <View className="flex-1 bg-white border border-gray-300 m-1 py-5">
       {/* Header */}
       <View className="space-y-4 px-5">
-        <View className="flex-row items-center space-x-2">
-          <CreditCardIcon color={'black'} size={18} />
-          <Text className="text-sm text-[#b2b2b2]">Поступления</Text>
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row space-x-2">
+            <CreditCardIcon color={'black'} size={18} />
+            <Text className="text-sm text-[#b2b2b2]">Поступления</Text>
+          </View>
+          <TouchableOpacity>
+            <Text className="text-sm">Подробно</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Column division */}
@@ -17,7 +40,10 @@ const Receipts = () => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-green-500">
-              +8 346 789{' '}
+              +{' '}
+              {receipts.length && receipts[0]
+                ? receipts[0].receipts
+                : 'Нет данных'}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
@@ -28,7 +54,9 @@ const Receipts = () => {
           {/* Second col */}
           <View className="flex-1 pl-5">
             <Text className="text-lg font-bold text-green-500">
-              1200{' '}
+              {receipts.length && receipts[1]
+                ? receipts[1].receipts
+                : 'Нет данных'}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>

@@ -1,15 +1,38 @@
-import {Text, View} from 'react-native'
+import {useEffect, useState} from 'react'
+import {Text, TouchableOpacity, View} from 'react-native'
 import {BanknotesIcon} from 'react-native-heroicons/outline'
 
+import {fetchSales} from '../config/api'
+
 const Sales = () => {
+  const [sales, setSales] = useState(0)
+
+  const updateSales = async () => {
+    try {
+      const response = await fetchSales()
+      setSales(response)
+    } catch (error) {
+      console.log('Error from Sales.jsx:', error)
+    }
+  }
+
+  useEffect(() => {
+    updateSales()
+  }, [])
+
   return (
     // Main block
     <View className="flex-1 bg-white border border-gray-300 m-1 py-5">
       {/* Header */}
       <View className="space-y-4 px-5">
-        <View className="flex-row items-center space-x-2">
-          <BanknotesIcon color={'black'} size={18} />
-          <Text className="text-sm text-[#b2b2b2]">Продажи</Text>
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row space-x-2">
+            <BanknotesIcon color={'black'} size={18} />
+            <Text className="text-sm text-[#b2b2b2]">Продажи</Text>
+          </View>
+          <TouchableOpacity>
+            <Text className="text-sm">Подробно</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Column division */}
@@ -17,7 +40,7 @@ const Sales = () => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-black">
-              8 346 789{' '}
+              {sales.length && sales[0] ? sales[0].sales : 'Нет данных'}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
@@ -29,12 +52,14 @@ const Sales = () => {
           {/* Second col */}
           <View className="flex-1 pl-5">
             <Text className="text-lg font-bold text-black">
-              1200{' '}
-              <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
-                {'\u20BD'}
-              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: '#b2b2b2',
+                  fontWeight: '300',
+                }}></Text>
             </Text>
-            <Text className="text-xs text-[#b2b2b2]">По номен. группам</Text>
+            <Text className="text-xs text-[#b2b2b2]">По номенк. группам</Text>
           </View>
         </View>
       </View>
