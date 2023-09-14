@@ -4,7 +4,7 @@ import {CreditCardIcon} from 'react-native-heroicons/outline'
 
 import {fetchConsumption} from '../config/api'
 
-const Expense = () => {
+const Consumption = () => {
   const [consumption, setConsumption] = useState(0)
 
   const updateConsumption = async () => {
@@ -70,4 +70,4 @@ const Expense = () => {
   )
 }
 
-export default Expense
+export default Consumption
