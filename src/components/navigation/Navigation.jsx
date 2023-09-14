@@ -23,6 +23,7 @@ const HomeScreen = () => {
         <Balance />
         <Receipts />
         <Consumption />
+        <Consumption />
         <Sales />
       </ScrollView>
     </View>
