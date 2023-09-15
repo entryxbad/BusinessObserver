@@ -12,7 +12,7 @@ const fetchBalance = async () => {
 
   try {
     const response = await fetch(
-      'http://192.168.64.140/apimobile/hs/mobile/balance',
+      'https://6177-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/balance',
       requestOptions,
     )
     if (!response.ok) {
@@ -37,7 +37,7 @@ const fetchReceipts = async () => {
 
   try {
     const response = await fetch(
-      'http://192.168.64.140/apimobile/hs/mobile/receipts',
+      'https://6177-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/receipts',
       requestOptions,
     )
     if (!response.ok) {
@@ -62,7 +62,7 @@ const fetchConsumption = async () => {
 
   try {
     const response = await fetch(
-      'http://192.168.64.140/apimobile/hs/mobile/consumption',
+      'https://6177-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/consumption',
       requestOptions,
     )
     if (!response.ok) {
@@ -87,7 +87,7 @@ const fetchSales = async () => {
 
   try {
     const response = await fetch(
-      'http://192.168.64.140/apimobile/hs/mobile/sales',
+      'https://6177-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/sales',
       requestOptions,
     )
     if (!response.ok) {

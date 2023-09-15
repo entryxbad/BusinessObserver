@@ -42,6 +42,7 @@ const Sales = () => {
             <Text className="text-lg font-bold text-black">
               {sales.length && sales[0] ? sales[0].sales : 'Нет данных'}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
+                {' '}
                 {'\u20BD'}
               </Text>
             </Text>
