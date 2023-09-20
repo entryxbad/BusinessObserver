@@ -12,7 +12,7 @@ const fetchBalance = async () => {
 
   try {
     const response = await fetch(
-      'https://6177-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/balance',
+      'https://f7b7-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/balance',
       requestOptions,
     )
     if (!response.ok) {
@@ -37,7 +37,7 @@ const fetchReceipts = async () => {
 
   try {
     const response = await fetch(
-      'https://6177-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/receipts',
+      'https://f7b7-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/receipts',
       requestOptions,
     )
     if (!response.ok) {
@@ -62,7 +62,7 @@ const fetchConsumption = async () => {
 
   try {
     const response = await fetch(
-      'https://6177-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/consumption',
+      'https://f7b7-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/consumption',
       requestOptions,
     )
     if (!response.ok) {
@@ -87,7 +87,7 @@ const fetchSales = async () => {
 
   try {
     const response = await fetch(
-      'https://6177-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/sales',
+      'https://f7b7-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/sales',
       requestOptions,
     )
     if (!response.ok) {
@@ -100,4 +100,35 @@ const fetchSales = async () => {
   }
 }
 
-export {fetchBalance, fetchReceipts, fetchConsumption, fetchSales}
+const fetchBalanceOrgs = async () => {
+  const username = 'admin'
+
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      Authorization: `Basic ${base64Encode(username)}`,
+    },
+  }
+
+  try {
+    const response = await fetch(
+      'https://f7b7-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/balance?code=all',
+      requestOptions,
+    )
+    if (!response.ok) {
+      throw new Error('Error from fetchBalanceOrgs')
+    }
+    const data = await response.json()
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export {
+  fetchBalance,
+  fetchReceipts,
+  fetchConsumption,
+  fetchSales,
+  fetchBalanceOrgs,
+}

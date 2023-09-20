@@ -7,12 +7,12 @@ import Header from '../components/Header'
 import Receipts from '../components/Receipts'
 import Sales from '../components/Sales'
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <View className="bg-[#f5f5f5] flex-1 relative">
       <Header />
       <ScrollView>
-        <Balance />
+        <Balance navigation={navigation} />
         <Receipts />
         <Consumption />
         <Sales />

@@ -4,13 +4,14 @@ import {CircleStackIcon} from 'react-native-heroicons/outline'
 
 import {fetchBalance} from '../config/api'
 
-const Balance = () => {
+const Balance = ({navigation}) => {
   const [balance, setBalance] = useState(0)
 
   const updateBalance = async () => {
     try {
       const response = await fetchBalance()
       setBalance(response)
+      console.log('res', response)
     } catch (error) {
       console.log('Error from Balance.jsx:', error)
     }
@@ -19,11 +20,6 @@ const Balance = () => {
   useEffect(() => {
     updateBalance()
   }, [])
-
-  const handleRefresh = () => {
-    updateBalance()
-    console.log(balance)
-  }
 
   return (
     // Main block
@@ -35,7 +31,7 @@ const Balance = () => {
             <CircleStackIcon color={'black'} size={18} />
             <Text className="text-sm text-[#b2b2b2]">Остаток</Text>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
             <Text>Подробно</Text>
           </TouchableOpacity>
         </View>
@@ -71,9 +67,3 @@ const Balance = () => {
 }
 
 export default Balance
-
-// <TouchableOpacity
-//             className="bg-[#fddf59] rounded-md p-2 items-center w-24"
-//             onPress={handleRefresh}>
-//             <Text className="text-sm text-black">Обновить</Text>
-//           </TouchableOpacity>
