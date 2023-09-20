@@ -40,7 +40,6 @@ const Receipts = () => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-green-500">
-              +{' '}
               {receipts.length && receipts[0]
                 ? receipts[0].receipts
                 : 'Нет данных'}{' '}

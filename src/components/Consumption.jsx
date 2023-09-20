@@ -40,7 +40,6 @@ const Consumption = () => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-red-500">
-              -{' '}
               {consumption.length && consumption[0]
                 ? consumption[0].consumption
                 : 'Нет данных'}{' '}
