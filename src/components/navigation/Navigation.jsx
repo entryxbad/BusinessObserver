@@ -9,7 +9,10 @@ import {InboxArrowDownIcon} from 'react-native-heroicons/outline'
 
 import BalanceDetailScreen from '../../screens/BalanceDetailScreen'
 import CalendarScreen from '../../screens/CalendarScreen'
+import ConsumptionDetailScreen from '../../screens/ConsumptionDetailScreen'
 import HomeScreen from '../../screens/HomeScreen'
+import ReceiptsDetailScreen from '../../screens/ReceiptsDetailScreen'
+import SalesDetailScreen from '../../screens/SalesDetailScreen'
 
 const Tab = createBottomTabNavigator()
 
@@ -19,10 +22,6 @@ const HomeTab = ({navigation}) => {
 
 const CalendarTab = () => {
   return <CalendarScreen />
-}
-
-const Detail = () => {
-  return <DetailScreen />
 }
 
 const HomeStack = createNativeStackNavigator()
@@ -36,9 +35,24 @@ const HomeStackScreen = () => {
         options={{headerShown: false}}
       />
       <HomeStack.Screen
-        name="Detail"
+        name="BalanceDetail"
         component={BalanceDetailScreen}
-        options={{headerShown: false}}
+        options={{headerTitle: 'Остаток'}}
+      />
+      <HomeStack.Screen
+        name="ReceiptsDetail"
+        component={ReceiptsDetailScreen}
+        options={{headerTitle: 'Поступления'}}
+      />
+      <HomeStack.Screen
+        name="ConsumptionDetail"
+        component={ConsumptionDetailScreen}
+        options={{headerTitle: 'Расход'}}
+      />
+      <HomeStack.Screen
+        name="SalesDetail"
+        component={SalesDetailScreen}
+        options={{headerTitle: 'Продажи'}}
       />
     </HomeStack.Navigator>
   )

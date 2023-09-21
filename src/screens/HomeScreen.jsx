@@ -13,9 +13,9 @@ const HomeScreen = ({navigation}) => {
       <Header />
       <ScrollView>
         <Balance navigation={navigation} />
-        <Receipts />
-        <Consumption />
-        <Sales />
+        <Receipts navigation={navigation} />
+        <Consumption navigation={navigation} />
+        <Sales navigation={navigation} />
       </ScrollView>
     </View>
   )

@@ -1,26 +1,26 @@
 import {useEffect, useState} from 'react'
 import {Text, View} from 'react-native'
 
-import {fetchBalanceOrgs} from '../config/api'
+import {fetchReceiptsOrgs} from '../config/api'
 
 const BalanceDetailScreen = () => {
-  const [balanceDetail, setBalanceDetail] = useState([])
+  const [receiptsDetail, setReceiptsDetail] = useState([])
 
-  const updateBalanceOrgs = async () => {
+  const updateReceiptsOrgs = async () => {
     try {
-      const response = await fetchBalanceOrgs()
-      setBalanceDetail(response)
+      const response = await fetchReceiptsOrgs()
+      setReceiptsDetail(response)
     } catch (error) {
-      console.log('Error from BalanceDetailScreen.jsx:', error)
+      console.log('Error from ReceiptsDetailScreen.jsx:', error)
     }
   }
 
   useEffect(() => {
-    updateBalanceOrgs()
+    updateReceiptsOrgs()
   }, [])
 
   const groupedData = {}
-  balanceDetail.forEach(org => {
+  receiptsDetail.forEach(org => {
     if (!groupedData[org.organization]) {
       groupedData[org.organization] = []
     }
@@ -28,11 +28,11 @@ const BalanceDetailScreen = () => {
       item => item.accountName === org.accountName,
     )
     if (existingOrg) {
-      existingOrg.balance = org.balance
+      existingOrg.receipts = org.receipts
     } else {
       groupedData[org.organization].push({
         accountName: org.accountName,
-        balance: org.balance,
+        balance: org.receipts,
       })
     }
   })
@@ -43,17 +43,6 @@ const BalanceDetailScreen = () => {
       <View className="flex-row justify-between border-dashed border-b">
         <Text className="text-black text-lg">Банк</Text>
         <Text className="text-black text-lg">Касса</Text>
-      </View>
-
-      {/* Total */}
-      <View className="mt-5 border-dashed border-b">
-        <View className="items-center">
-          <Text className="text-black font-bold text-xl">Итого</Text>
-        </View>
-        <View className="flex-row justify-between">
-          <Text className="text-black font-bold text-lg">100000</Text>
-          <Text className="text-black font-bold text-lg">23112340</Text>
-        </View>
       </View>
 
       {/* Organization */}

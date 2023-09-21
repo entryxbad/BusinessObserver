@@ -11,7 +11,6 @@ const Balance = ({navigation}) => {
     try {
       const response = await fetchBalance()
       setBalance(response)
-      console.log('res', response)
     } catch (error) {
       console.log('Error from Balance.jsx:', error)
     }
@@ -31,7 +30,8 @@ const Balance = ({navigation}) => {
             <CircleStackIcon color={'black'} size={18} />
             <Text className="text-sm text-[#b2b2b2]">Остаток</Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('BalanceDetail')}>
             <Text>Подробно</Text>
           </TouchableOpacity>
         </View>

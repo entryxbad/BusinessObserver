@@ -4,7 +4,7 @@ import {CreditCardIcon} from 'react-native-heroicons/outline'
 
 import {fetchConsumption} from '../config/api'
 
-const Consumption = () => {
+const Consumption = ({navigation}) => {
   const [consumption, setConsumption] = useState(0)
 
   const updateConsumption = async () => {
@@ -30,7 +30,8 @@ const Consumption = () => {
             <CreditCardIcon color={'black'} size={18} />
             <Text className="text-sm text-[#b2b2b2]">Расход</Text>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ConsumptionDetail')}>
             <Text>Подробно</Text>
           </TouchableOpacity>
         </View>

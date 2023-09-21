@@ -4,7 +4,7 @@ import {CreditCardIcon} from 'react-native-heroicons/outline'
 
 import {fetchReceipts} from '../config/api'
 
-const Receipts = () => {
+const Receipts = ({navigation}) => {
   const [receipts, setReceipts] = useState(0)
 
   const updateReceipts = async () => {
@@ -30,7 +30,8 @@ const Receipts = () => {
             <CreditCardIcon color={'black'} size={18} />
             <Text className="text-sm text-[#b2b2b2]">Поступления</Text>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ReceiptsDetail')}>
             <Text className="text-sm">Подробно</Text>
           </TouchableOpacity>
         </View>

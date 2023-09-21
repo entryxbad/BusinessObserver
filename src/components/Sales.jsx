@@ -4,7 +4,7 @@ import {BanknotesIcon} from 'react-native-heroicons/outline'
 
 import {fetchSales} from '../config/api'
 
-const Sales = () => {
+const Sales = ({navigation}) => {
   const [sales, setSales] = useState(0)
 
   const updateSales = async () => {
@@ -30,7 +30,7 @@ const Sales = () => {
             <BanknotesIcon color={'black'} size={18} />
             <Text className="text-sm text-[#b2b2b2]">Продажи</Text>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('SalesDetail')}>
             <Text className="text-sm">Подробно</Text>
           </TouchableOpacity>
         </View>
