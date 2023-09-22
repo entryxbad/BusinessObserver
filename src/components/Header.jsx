@@ -1,18 +1,20 @@
-import {Text, TouchableOpacity, View} from 'react-native'
-import {UserCircleIcon} from 'react-native-heroicons/outline'
+import {Image, TouchableOpacity, View} from 'react-native'
+import {ArrowPathIcon, UserCircleIcon} from 'react-native-heroicons/outline'
 
-const Header = () => {
+import {logo} from '../config/images'
+
+const Header = ({handleRefresh}) => {
   return (
     <View className="flex-row bg-white w-full h-11 shadow-sm mb-3 items-center justify-between px-2">
-      <View className="w-0">
+      <View>
         <UserCircleIcon color={'red'} size={28} />
       </View>
       <View>
-        <Text>Ufarobotics Mobile</Text>
+        <Image className="w-48 h-10" source={logo} />
       </View>
       <View>
-        <TouchableOpacity>
-          <Text>Update</Text>
+        <TouchableOpacity onPress={handleRefresh}>
+          <ArrowPathIcon color={'black'} size={24} />
         </TouchableOpacity>
       </View>
     </View>

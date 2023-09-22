@@ -4,7 +4,7 @@ import {CreditCardIcon} from 'react-native-heroicons/outline'
 
 import {fetchConsumption} from '../config/api'
 
-const Consumption = ({navigation}) => {
+const Consumption = ({navigation, refreshKey}) => {
   const [consumption, setConsumption] = useState(0)
 
   const updateConsumption = async () => {
@@ -18,7 +18,7 @@ const Consumption = ({navigation}) => {
 
   useEffect(() => {
     updateConsumption()
-  }, [])
+  }, [refreshKey])
 
   return (
     // Main block
@@ -41,8 +41,8 @@ const Consumption = ({navigation}) => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-red-500">
-              {consumption.length && consumption[0]
-                ? consumption[0].consumption
+              {consumption.length && consumption[1]
+                ? consumption[1].consumption
                 : 'Нет данных'}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}

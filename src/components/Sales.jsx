@@ -4,7 +4,7 @@ import {BanknotesIcon} from 'react-native-heroicons/outline'
 
 import {fetchSales} from '../config/api'
 
-const Sales = ({navigation}) => {
+const Sales = ({navigation, refreshKey}) => {
   const [sales, setSales] = useState(0)
 
   const updateSales = async () => {
@@ -18,7 +18,7 @@ const Sales = ({navigation}) => {
 
   useEffect(() => {
     updateSales()
-  }, [])
+  }, [refreshKey])
 
   return (
     // Main block

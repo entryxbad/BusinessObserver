@@ -1,4 +1,4 @@
-import React from 'react'
+import {useState} from 'react'
 import {ScrollView, View} from 'react-native'
 
 import Balance from '../components/Balance'
@@ -8,14 +8,19 @@ import Receipts from '../components/Receipts'
 import Sales from '../components/Sales'
 
 const HomeScreen = ({navigation}) => {
+  const [refreshKey, setRefreshKey] = useState(0)
+
+  const handleRefresh = () => {
+    setRefreshKey(prevKey => prevKey + 1)
+  }
   return (
     <View className="bg-[#f5f5f5] flex-1 relative">
-      <Header />
+      <Header handleRefresh={handleRefresh} />
       <ScrollView>
-        <Balance navigation={navigation} />
-        <Receipts navigation={navigation} />
-        <Consumption navigation={navigation} />
-        <Sales navigation={navigation} />
+        <Balance navigation={navigation} refreshKey={refreshKey} />
+        <Receipts navigation={navigation} refreshKey={refreshKey} />
+        <Consumption navigation={navigation} refreshKey={refreshKey} />
+        <Sales navigation={navigation} refreshKey={refreshKey} />
       </ScrollView>
     </View>
   )

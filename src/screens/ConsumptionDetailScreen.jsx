@@ -10,7 +10,6 @@ const BalanceDetailScreen = () => {
     try {
       const response = await fetchConsumptionOrgs()
       setConsumptionDetail(response)
-      console.log('first', response)
     } catch (error) {
       console.log('Error from ConsumptionDetailScreen.jsx:', error)
     }
@@ -29,11 +28,11 @@ const BalanceDetailScreen = () => {
       item => item.accountName === org.accountName,
     )
     if (existingOrg) {
-      existingOrg.receipts = org.receipts
+      existingOrg.consumption = org.consumption
     } else {
       groupedData[org.organization].push({
         accountName: org.accountName,
-        balance: org.receipts,
+        balance: org.consumption,
       })
     }
   })

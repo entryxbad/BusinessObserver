@@ -4,7 +4,7 @@ import {CircleStackIcon} from 'react-native-heroicons/outline'
 
 import {fetchBalance} from '../config/api'
 
-const Balance = ({navigation}) => {
+const Balance = ({navigation, refreshKey}) => {
   const [balance, setBalance] = useState(0)
 
   const updateBalance = async () => {
@@ -18,7 +18,7 @@ const Balance = ({navigation}) => {
 
   useEffect(() => {
     updateBalance()
-  }, [])
+  }, [refreshKey])
 
   return (
     // Main block
@@ -31,7 +31,9 @@ const Balance = ({navigation}) => {
             <Text className="text-sm text-[#b2b2b2]">Остаток</Text>
           </View>
           <TouchableOpacity
-            onPress={() => navigation.navigate('BalanceDetail')}>
+            onPress={() =>
+              navigation.navigate('BalanceDetail', {balanceData: balance})
+            }>
             <Text>Подробно</Text>
           </TouchableOpacity>
         </View>
@@ -41,7 +43,7 @@ const Balance = ({navigation}) => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-black">
-              {balance.length && balance[0] ? balance[0].balance : 'Нет данных'}{' '}
+              {balance.length && balance[1] ? balance[1].balance : 'Нет данных'}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
@@ -52,7 +54,7 @@ const Balance = ({navigation}) => {
           {/* Second col */}
           <View className="flex-1 pl-5">
             <Text className="text-lg font-bold text-black">
-              {balance.length && balance[1] ? balance[1].balance : 'Нет данных'}{' '}
+              {balance.length && balance[0] ? balance[0].balance : 'Нет данных'}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
