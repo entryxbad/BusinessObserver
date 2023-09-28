@@ -40,7 +40,7 @@ const Sales = ({navigation, refreshKey}) => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-black">
-              {sales.length && sales[0] ? sales[0].sales : 'Нет данных'}
+              {sales.length && sales[0] ? sales[0].sales : '0'}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {' '}
                 {'\u20BD'}

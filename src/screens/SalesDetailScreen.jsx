@@ -22,20 +22,63 @@ const SalesDetailScreen = () => {
   return (
     <ScrollView className="flex-1 px-5 mb-1">
       {/* Organization */}
-      {salesDetail.map((item, index) => (
-        <View className="mt-2" key={index}>
-          <View className="items-center">
-            <Text className="text-black font-bold text-xl mb-3">
-              {item.partner}
-            </Text>
-          </View>
 
-          <View className="flex-row justify-between border-dashed border-b">
-            <Text className="text-black text-lg">Продажа:</Text>
-            <Text className="text-black text-lg">{item.sales}</Text>
-          </View>
+      <View className="mt-2">
+        <View className="flex-1 justify-between bg-white border border-gray-300 p-2 mt-2">
+          <Text className="text-black text-lg font-bold">
+            45 465 {'\u20BD'}
+          </Text>
+          <Text className="text-gray-400 text-lg">ООО"Солнышко"</Text>
+          <Text className="text-black text-base">
+            Предоплата по договору поставки №234
+          </Text>
         </View>
-      ))}
+        <View className="flex-1 justify-between bg-white border border-gray-300 p-2 mt-2">
+          <Text className="text-black text-lg font-bold">
+            45 465 {'\u20BD'}
+          </Text>
+          <Text className="text-gray-400 text-lg">ООО"Солнышко"</Text>
+          <Text className="text-black text-base">
+            Предоплата по договору поставки №234
+          </Text>
+        </View>
+        <View className="flex-1 justify-between bg-white border border-gray-300 p-2 mt-2">
+          <Text className="text-black text-lg font-bold">
+            45 465 {'\u20BD'}
+          </Text>
+          <Text className="text-gray-400 text-lg">ООО"Солнышко"</Text>
+          <Text className="text-black text-base">
+            Предоплата по договору поставки №234
+          </Text>
+        </View>
+        <View className="flex-1 justify-between bg-white border border-gray-300 p-2 mt-2">
+          <Text className="text-black text-lg font-bold">
+            45 465 {'\u20BD'}
+          </Text>
+          <Text className="text-gray-400 text-lg">ООО"Солнышко"</Text>
+          <Text className="text-black text-base">
+            Предоплата по договору поставки №234
+          </Text>
+        </View>
+        <View className="flex-1 justify-between bg-white border border-gray-300 p-2 mt-2">
+          <Text className="text-black text-lg font-bold">
+            45 465 {'\u20BD'}
+          </Text>
+          <Text className="text-gray-400 text-lg">ООО"Солнышко"</Text>
+          <Text className="text-black text-base">
+            Предоплата по договору поставки №234
+          </Text>
+        </View>
+        <View className="flex-1 justify-between bg-white border border-gray-300 p-2 mt-2">
+          <Text className="text-black text-lg font-bold">
+            45 465 {'\u20BD'}
+          </Text>
+          <Text className="text-gray-400 text-lg">ООО"Солнышко"</Text>
+          <Text className="text-black text-base">
+            Предоплата по договору поставки №234
+          </Text>
+        </View>
+      </View>
     </ScrollView>
   )
 }

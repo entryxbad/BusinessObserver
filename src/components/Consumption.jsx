@@ -43,7 +43,7 @@ const Consumption = ({navigation, refreshKey}) => {
             <Text className="text-lg font-bold text-red-500">
               {consumption.length && consumption[1]
                 ? consumption[1].consumption
-                : 'Нет данных'}{' '}
+                : '0'}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
@@ -56,7 +56,7 @@ const Consumption = ({navigation, refreshKey}) => {
             <Text className="text-lg font-bold text-red-500">
               {consumption.length && consumption[0]
                 ? consumption[0].consumption
-                : 'Нет данных'}{' '}
+                : '0'}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>

@@ -43,7 +43,7 @@ const Balance = ({navigation, refreshKey}) => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-black">
-              {balance.length && balance[1] ? balance[1].balance : 'Нет данных'}{' '}
+              {balance.length && balance[1] ? balance[1].balance : '0'}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
@@ -54,7 +54,7 @@ const Balance = ({navigation, refreshKey}) => {
           {/* Second col */}
           <View className="flex-1 pl-5">
             <Text className="text-lg font-bold text-black">
-              {balance.length && balance[0] ? balance[0].balance : 'Нет данных'}{' '}
+              {balance.length && balance[0] ? balance[0].balance : '0'}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>

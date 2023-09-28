@@ -41,6 +41,7 @@ const Receipts = ({navigation, refreshKey}) => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-green-500">
+              {/* Расчетные счета */}
               {receipts.length && receipts[0] ? receipts[0].receipts : 0}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
@@ -52,6 +53,7 @@ const Receipts = ({navigation, refreshKey}) => {
           {/* Second col */}
           <View className="flex-1 pl-5">
             <Text className="text-lg font-bold text-green-500">
+              {/* Касса организации */}
               {receipts.length && receipts[1] ? receipts[1].receipts : 0}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
@@ -67,3 +69,5 @@ const Receipts = ({navigation, refreshKey}) => {
 }
 
 export default Receipts
+
+// {receipts.find(item => item.name === 'Расчетные счета')?.receipts || 0}{' '}
