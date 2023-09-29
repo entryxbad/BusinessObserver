@@ -41,8 +41,8 @@ const BalanceDetailScreen = () => {
     <View className="flex-1 mx-5 mt-5">
       {/* Header */}
       <View className="flex-row justify-between border-dashed border-b">
-        <Text className="text-black text-lg">Банк</Text>
-        <Text className="text-black text-lg">Касса</Text>
+        <Text className="text-black text-lg font-bold">Банк</Text>
+        <Text className="text-black text-lg font-bold">Касса</Text>
       </View>
 
       {/* Organization */}
@@ -56,18 +56,20 @@ const BalanceDetailScreen = () => {
 
           <View className="flex-row justify-between border-dashed border-b">
             <Text className="text-black text-lg">
-              {`${
+              {(
                 groupedData[organization].find(
                   item => item.accountName === 'Расчетные счета',
-                )?.balance || 'Нет данных'
-              }`}
+                )?.balance || 0
+              ).toFixed(2)}{' '}
+              {'\u20BD'}
             </Text>
             <Text className="text-black text-lg">
-              {`${
+              {(
                 groupedData[organization].find(
                   item => item.accountName === 'Касса организации',
-                )?.balance || 'Нет данных'
-              }`}
+                )?.balance || 0
+              ).toFixed(2)}{' '}
+              {'\u20BD'}
             </Text>
           </View>
         </View>

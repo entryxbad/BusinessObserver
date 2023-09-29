@@ -42,39 +42,81 @@ const BalanceDetailScreen = () => {
   })
 
   return (
-    <ScrollView className="mt-5 px-5 mb-1">
+    <ScrollView className="flex-1 mt-5 px-2 mb-1">
       {/* Header */}
       <View className="bg-white border border-gray-300 px-2">
         <View className="flex-row justify-between">
           <Text className="text-black text-lg font-bold">Банк</Text>
           <Text className="text-black text-lg font-bold">Касса</Text>
         </View>
-
         {/* Total */}
-        <View className="flex-1">
+        <View className="mt-2">
           <View className="items-center">
             <Text className="text-black font-bold text-xl">Итого</Text>
           </View>
-
-          <View className="flex-row justify-between">
-            <Text className="text-black font-bold text-lg">1212</Text>
-            <Text className="text-black font-bold text-lg">1212</Text>
-          </View>
+          {balanceData.map((item, index) => {
+            if (item.bank !== undefined && item.checkout !== undefined) {
+              return (
+                <View className="flex-row justify-between" key={index}>
+                  <Text className="text-black font-bold text-lg">
+                    {item.bank !== undefined
+                      ? item.bank.toFixed(2)
+                      : item.account.toFixed(2)}{' '}
+                    {'\u20BD'}
+                  </Text>
+                  <Text className="text-black font-bold text-lg">
+                    {item.checkout.toFixed(2)} {'\u20BD'}
+                  </Text>
+                </View>
+              )
+            }
+            return null
+          })}
         </View>
       </View>
 
       {/* Organization */}
+      {Object.keys(groupedData).map((organization, index) => {
+        const hasAccountName = groupedData[organization].some(
+          item =>
+            item.accountName === 'Расчетные счета' ||
+            item.accountName === 'Касса организации',
+        )
 
-      <View className="mt-5 bg-white border border-gray-300 px-2">
-        <View className="items-center">
-          <Text className="text-black font-bold text-xl mb-3">Malina</Text>
-        </View>
+        if (hasAccountName) {
+          return (
+            <View
+              className="mt-5 bg-white border border-gray-300 px-2"
+              key={index}>
+              <View className="items-center">
+                <Text className="text-black font-bold text-xl mb-3">
+                  {organization}
+                </Text>
+              </View>
 
-        <View className="flex-row justify-between">
-          <Text className="text-black text-lg">232323</Text>
-          <Text className="text-black text-lg">78678678</Text>
-        </View>
-      </View>
+              <View className="flex-row justify-between">
+                <Text className="text-black text-lg">
+                  {(
+                    groupedData[organization].find(
+                      item => item.accountName === 'Расчетные счета',
+                    )?.balance || 0
+                  ).toFixed(2)}{' '}
+                  {'\u20BD'}
+                </Text>
+                <Text className="text-black text-lg">
+                  {(
+                    groupedData[organization].find(
+                      item => item.accountName === 'Касса организации',
+                    )?.balance || 0
+                  ).toFixed(2)}{' '}
+                  {'\u20BD'}
+                </Text>
+              </View>
+            </View>
+          )
+        }
+        return null
+      })}
     </ScrollView>
   )
 }

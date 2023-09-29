@@ -5,7 +5,7 @@ import {CircleStackIcon} from 'react-native-heroicons/outline'
 import {fetchBalance} from '../config/api'
 
 const Balance = ({navigation, refreshKey}) => {
-  const [balance, setBalance] = useState(0)
+  const [balance, setBalance] = useState([])
 
   const updateBalance = async () => {
     try {
@@ -43,7 +43,10 @@ const Balance = ({navigation, refreshKey}) => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-black">
-              {balance.length && balance[1] ? balance[1].balance : '0'}{' '}
+              {(
+                balance.find(item => item.accountName === 'Расчетные счета')
+                  ?.balance || 0
+              ).toFixed(2)}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
@@ -54,7 +57,10 @@ const Balance = ({navigation, refreshKey}) => {
           {/* Second col */}
           <View className="flex-1 pl-5">
             <Text className="text-lg font-bold text-black">
-              {balance.length && balance[0] ? balance[0].balance : '0'}{' '}
+              {(
+                balance.find(item => item.accountName === 'Касса организации')
+                  ?.balance || 0
+              ).toFixed(2)}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>

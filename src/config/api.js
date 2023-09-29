@@ -1,6 +1,6 @@
 import {encode as base64Encode} from 'base-64'
 
-const url = 'https://42f3-92-50-180-214.ngrok-free.app/'
+const url = 'https://f295-92-50-180-214.ngrok-free.app/'
 
 const fetchBalance = async () => {
   const username = 'admin'
@@ -14,7 +14,7 @@ const fetchBalance = async () => {
 
   try {
     const response = await fetch(
-      'https://42f3-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/balance',
+      'https://f295-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/balance',
       requestOptions,
     )
     if (!response.ok) {
@@ -39,7 +39,7 @@ const fetchReceipts = async () => {
 
   try {
     const response = await fetch(
-      'https://42f3-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/receipts',
+      'https://f295-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/receipts',
       requestOptions,
     )
     if (!response.ok) {
@@ -64,7 +64,7 @@ const fetchConsumption = async () => {
 
   try {
     const response = await fetch(
-      'https://42f3-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/consumption',
+      'https://f295-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/consumption',
       requestOptions,
     )
     if (!response.ok) {
@@ -89,7 +89,7 @@ const fetchSales = async () => {
 
   try {
     const response = await fetch(
-      'https://42f3-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/sales',
+      'https://f295-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/sales',
       requestOptions,
     )
     if (!response.ok) {
@@ -114,7 +114,7 @@ const fetchBalanceOrgs = async () => {
 
   try {
     const response = await fetch(
-      'https://42f3-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/balance?code=all',
+      'https://f295-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/balance?code=all',
       requestOptions,
     )
     if (!response.ok) {
@@ -139,7 +139,7 @@ const fetchReceiptsOrgs = async () => {
 
   try {
     const response = await fetch(
-      'https://42f3-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/receipts?code=all',
+      'https://f295-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/receipts?code=all',
       requestOptions,
     )
     if (!response.ok) {
@@ -164,7 +164,7 @@ const fetchConsumptionOrgs = async () => {
 
   try {
     const response = await fetch(
-      'https://42f3-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/consumption?code=all',
+      'https://f295-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/consumption?code=all',
       requestOptions,
     )
     if (!response.ok) {
@@ -189,7 +189,7 @@ const fetchSalesOrgs = async () => {
 
   try {
     const response = await fetch(
-      'https://42f3-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/sales?code=all',
+      'https://f295-92-50-180-214.ngrok-free.app/apimobile/hs/mobile/sales?code=all',
       requestOptions,
     )
     if (!response.ok) {

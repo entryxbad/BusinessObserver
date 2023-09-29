@@ -5,7 +5,7 @@ import {CreditCardIcon} from 'react-native-heroicons/outline'
 import {fetchReceipts} from '../config/api'
 
 const Receipts = ({navigation, refreshKey}) => {
-  const [receipts, setReceipts] = useState(0)
+  const [receipts, setReceipts] = useState([])
 
   const updateReceipts = async () => {
     try {
@@ -42,7 +42,10 @@ const Receipts = ({navigation, refreshKey}) => {
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-green-500">
               {/* Расчетные счета */}
-              {receipts.length && receipts[0] ? receipts[0].receipts : 0}{' '}
+              {(
+                receipts.find(item => item.accountName === 'Расчетные счета')
+                  ?.receipts || 0
+              ).toFixed(2)}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
@@ -54,7 +57,10 @@ const Receipts = ({navigation, refreshKey}) => {
           <View className="flex-1 pl-5">
             <Text className="text-lg font-bold text-green-500">
               {/* Касса организации */}
-              {receipts.length && receipts[1] ? receipts[1].receipts : 0}{' '}
+              {(
+                receipts.find(item => item.accountName === 'Касса организации')
+                  ?.receipts || 0
+              ).toFixed(2)}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
@@ -69,5 +75,3 @@ const Receipts = ({navigation, refreshKey}) => {
 }
 
 export default Receipts
-
-// {receipts.find(item => item.name === 'Расчетные счета')?.receipts || 0}{' '}

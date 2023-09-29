@@ -5,7 +5,7 @@ import {CreditCardIcon} from 'react-native-heroicons/outline'
 import {fetchConsumption} from '../config/api'
 
 const Consumption = ({navigation, refreshKey}) => {
-  const [consumption, setConsumption] = useState(0)
+  const [consumption, setConsumption] = useState([])
 
   const updateConsumption = async () => {
     try {
@@ -41,9 +41,10 @@ const Consumption = ({navigation, refreshKey}) => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-red-500">
-              {consumption.length && consumption[1]
-                ? consumption[1].consumption
-                : '0'}{' '}
+              {(
+                consumption.find(item => item.accountName === 'Расчетные счета')
+                  ?.consumption || 0
+              ).toFixed(2)}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
@@ -54,9 +55,11 @@ const Consumption = ({navigation, refreshKey}) => {
           {/* Second col */}
           <View className="flex-1 pl-5">
             <Text className="text-lg font-bold text-red-500">
-              {consumption.length && consumption[0]
-                ? consumption[0].consumption
-                : '0'}{' '}
+              {(
+                consumption.find(
+                  item => item.accountName === 'Касса организации',
+                )?.consumption || 0
+              ).toFixed(2)}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
