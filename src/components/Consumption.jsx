@@ -3,6 +3,7 @@ import {Text, TouchableOpacity, View} from 'react-native'
 import {CreditCardIcon} from 'react-native-heroicons/outline'
 
 import {fetchConsumption} from '../config/api'
+import {formatNumber} from '../config/functions'
 
 const Consumption = ({navigation, refreshKey}) => {
   const [consumption, setConsumption] = useState([])
@@ -22,7 +23,7 @@ const Consumption = ({navigation, refreshKey}) => {
 
   return (
     // Main block
-    <View className="flex-1 bg-white border border-gray-300 m-1 py-5">
+    <View className="flex-1 bg-white border border-gray-300 m-1 py-3">
       {/* Header */}
       <View className="space-y-4 px-5">
         <View className="flex-row items-center justify-between">
@@ -41,10 +42,10 @@ const Consumption = ({navigation, refreshKey}) => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-red-500">
-              {(
+              {formatNumber(
                 consumption.find(item => item.accountName === 'Расчетные счета')
-                  ?.consumption || 0
-              ).toFixed(2)}{' '}
+                  ?.consumption,
+              )}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
@@ -55,11 +56,11 @@ const Consumption = ({navigation, refreshKey}) => {
           {/* Second col */}
           <View className="flex-1 pl-5">
             <Text className="text-lg font-bold text-red-500">
-              {(
+              {formatNumber(
                 consumption.find(
                   item => item.accountName === 'Касса организации',
-                )?.consumption || 0
-              ).toFixed(2)}{' '}
+                )?.consumption || 0,
+              )}{' '}
               <Text style={{fontSize: 14, color: '#b2b2b2', fontWeight: '300'}}>
                 {'\u20BD'}
               </Text>
@@ -68,7 +69,9 @@ const Consumption = ({navigation, refreshKey}) => {
           </View>
         </View>
       </View>
-      <View className="flex-1 justify-center"></View>
+      <View className="flex-1 items-center mt-3">
+        <Text className="text-xs text-[#b2b2b2]">Данные за текущий день</Text>
+      </View>
     </View>
   )
 }

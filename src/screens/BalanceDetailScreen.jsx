@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react'
 import {ScrollView, Text, View} from 'react-native'
 
 import {fetchBalanceOrgs} from '../config/api'
+import {formatNumber} from '../config/functions'
 
 const BalanceDetailScreen = () => {
   const [balanceDetail, setBalanceDetail] = useState([])
@@ -59,9 +60,9 @@ const BalanceDetailScreen = () => {
               return (
                 <View className="flex-row justify-between" key={index}>
                   <Text className="text-black font-bold text-lg">
-                    {item.bank !== undefined
-                      ? item.bank.toFixed(2)
-                      : item.account.toFixed(2)}{' '}
+                    {formatNumber(
+                      item.bank !== undefined ? item.bank : item.account,
+                    )}{' '}
                     {'\u20BD'}
                   </Text>
                   <Text className="text-black font-bold text-lg">
@@ -96,19 +97,19 @@ const BalanceDetailScreen = () => {
 
               <View className="flex-row justify-between">
                 <Text className="text-black text-lg">
-                  {(
+                  {formatNumber(
                     groupedData[organization].find(
                       item => item.accountName === 'Расчетные счета',
-                    )?.balance || 0
-                  ).toFixed(2)}{' '}
+                    )?.balance || 0,
+                  )}{' '}
                   {'\u20BD'}
                 </Text>
                 <Text className="text-black text-lg">
-                  {(
+                  {formatNumber(
                     groupedData[organization].find(
                       item => item.accountName === 'Касса организации',
-                    )?.balance || 0
-                  ).toFixed(2)}{' '}
+                    )?.balance || 0,
+                  )}{' '}
                   {'\u20BD'}
                 </Text>
               </View>

@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react'
 import {Text, View} from 'react-native'
 
 import {fetchReceiptsOrgs} from '../config/api'
+import {formatNumber} from '../config/functions'
 
 const BalanceDetailScreen = () => {
   const [receiptsDetail, setReceiptsDetail] = useState([])
@@ -56,19 +57,19 @@ const BalanceDetailScreen = () => {
 
           <View className="flex-row justify-between border-dashed border-b">
             <Text className="text-black text-lg">
-              {(
+              {formatNumber(
                 groupedData[organization].find(
                   item => item.accountName === 'Расчетные счета',
-                )?.balance || 0
-              ).toFixed(2)}{' '}
+                )?.balance || 0,
+              )}{' '}
               {'\u20BD'}
             </Text>
             <Text className="text-black text-lg">
-              {(
+              {formatNumber(
                 groupedData[organization].find(
                   item => item.accountName === 'Касса организации',
-                )?.balance || 0
-              ).toFixed(2)}{' '}
+                )?.balance || 0,
+              )}{' '}
               {'\u20BD'}
             </Text>
           </View>

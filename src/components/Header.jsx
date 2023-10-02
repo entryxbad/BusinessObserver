@@ -7,7 +7,7 @@ const Header = ({handleRefresh}) => {
   return (
     <View className="flex-row bg-white w-full h-11 shadow-sm mb-3 items-center justify-between px-2">
       <View>
-        <UserCircleIcon color={'red'} size={28} />
+        <UserCircleIcon color={'#0dd9e7'} size={28} />
       </View>
       <View>
         <Image className="w-48 h-10" source={logo} />
