@@ -57,7 +57,7 @@ const HomeStackScreen = () => {
       <HomeStack.Screen
         name="SalesDetail"
         component={SalesDetailScreen}
-        options={{headerTitle: 'Продажи'}}
+        options={{headerTitle: 'Продажи за текущий день'}}
       />
     </HomeStack.Navigator>
   )
