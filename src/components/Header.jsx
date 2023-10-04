@@ -10,7 +10,7 @@ const Header = ({handleRefresh}) => {
         <UserCircleIcon color={'#0dd9e7'} size={28} />
       </View>
       <View>
-        <Image className="w-48 h-10" source={logo} />
+        <Image className="w-48 h-12" source={logo} />
       </View>
       <View>
         <TouchableOpacity onPress={handleRefresh}>

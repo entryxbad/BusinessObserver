@@ -202,6 +202,35 @@ const fetchSalesOrgs = async () => {
   }
 }
 
+// const fetchOrgs = async () => {
+//   const username = 'userApiMobile'
+//   const password = '12345An'
+
+//   const credentials = `${username}:${password}`
+//   const base64Credentials = base64Encode(credentials)
+
+//   const requestOptions = {
+//     method: 'GET',
+//     headers: {
+//       Authorization: `Basic ${base64Credentials}`,
+//     },
+//   }
+
+//   try {
+//     const response = await fetch(
+//       'https://1cfresh.com/a/eac/2575653/hs/mobile/org ',
+//       requestOptions,
+//     )
+//     if (!response.ok) {
+//       throw new Error('Error from fetchBalance')
+//     }
+//     const data = await response.json()
+//     return data
+//   } catch (error) {
+//     throw error
+//   }
+// }
+
 export {
   fetchBalance,
   fetchReceipts,
@@ -211,4 +240,5 @@ export {
   fetchReceiptsOrgs,
   fetchConsumptionOrgs,
   fetchSalesOrgs,
+  fetchOrgs,
 }
