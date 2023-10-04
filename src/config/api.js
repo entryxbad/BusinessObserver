@@ -202,6 +202,55 @@ const fetchSalesOrgs = async () => {
   }
 }
 
+const fetchLicense1 = async () => {
+  const username = 'admin'
+
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      Authorization: `Basic ${base64Encode(username)}`,
+    },
+  }
+
+  try {
+    const response = await fetch(
+      'https://f295-92-50-180-214.ngrok-free.app/servLic/hs/licensing/info/1',
+      requestOptions,
+    )
+    if (!response.ok) {
+      throw new Error('Error from fetchLicense1')
+    }
+    const data = await response.json()
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+const fetchLicense2 = async () => {
+  const username = 'admin'
+
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      Authorization: `Basic ${base64Encode(username)}`,
+    },
+  }
+
+  try {
+    const response = await fetch(
+      'https://f295-92-50-180-214.ngrok-free.app/servLic/hs/licensing/info/2',
+      requestOptions,
+    )
+    if (!response.ok) {
+      throw new Error('Error from fetchLicense2')
+    }
+    const data = await response.json()
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 // const fetchOrgs = async () => {
 //   const username = 'userApiMobile'
 //   const password = '12345An'
@@ -240,5 +289,6 @@ export {
   fetchReceiptsOrgs,
   fetchConsumptionOrgs,
   fetchSalesOrgs,
-  fetchOrgs,
+  fetchLicense1,
+  fetchLicense2,
 }

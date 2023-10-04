@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react'
-import {Text, TouchableOpacity, View} from 'react-native'
+import {Alert, Text, TouchableOpacity, View} from 'react-native'
 import {CircleStackIcon} from 'react-native-heroicons/outline'
 
-import {fetchBalance} from '../config/api'
+import {fetchBalance, fetchLicense1} from '../config/api'
 import {formatNumber} from '../config/functions'
 
 const Balance = ({navigation, refreshKey}) => {
@@ -21,6 +21,27 @@ const Balance = ({navigation, refreshKey}) => {
     updateBalance()
   }, [refreshKey])
 
+  const checkLic = async () => {
+    try {
+      const response = await fetchLicense1()
+      return response[0].Status === 'Действительна'
+    } catch (error) {
+      console.log('Error from SalesLic', error)
+      return false
+    }
+  }
+
+  const handleButtonClick = async () => {
+    const licenseValid = await checkLic()
+
+    if (licenseValid) {
+      Alert.alert('Поздравляю', 'У вас есть лицензия')
+      navigation.navigate('BalanceDetail', {balanceData: balance})
+    } else {
+      Alert.alert('Ошибка', 'Купите лицензию')
+    }
+  }
+
   return (
     // Main block
     <View className="flex-1 bg-white border border-gray-300 m-1 py-3">
@@ -31,10 +52,7 @@ const Balance = ({navigation, refreshKey}) => {
             <CircleStackIcon color={'black'} size={18} />
             <Text className="text-sm text-[#b2b2b2]">Остаток</Text>
           </View>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('BalanceDetail', {balanceData: balance})
-            }>
+          <TouchableOpacity onPress={handleButtonClick}>
             <Text>Подробно</Text>
           </TouchableOpacity>
         </View>

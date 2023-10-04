@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react'
-import {Text, TouchableOpacity, View} from 'react-native'
+import {Alert, Text, TouchableOpacity, View} from 'react-native'
 import {BanknotesIcon} from 'react-native-heroicons/outline'
 
-import {fetchSales} from '../config/api'
+import {fetchLicense2, fetchSales} from '../config/api'
 import {formatNumber} from '../config/functions'
 
 const Sales = ({navigation, refreshKey}) => {
@@ -21,6 +21,27 @@ const Sales = ({navigation, refreshKey}) => {
     updateSales()
   }, [refreshKey])
 
+  const checkLic = async () => {
+    try {
+      const response = await fetchLicense2()
+      return response[0].Status === 'Действительна'
+    } catch (error) {
+      console.log('Error from SalesLic', error)
+      return false
+    }
+  }
+
+  const handleButtonClick = async () => {
+    const licenseValid = await checkLic()
+
+    if (licenseValid) {
+      Alert.alert('Поздравляю', 'У вас есть лицензия')
+      navigation.navigate('SalesDetail')
+    } else {
+      Alert.alert('Ошибка', 'Купите лицензию')
+    }
+  }
+
   return (
     // Main block
     <View className="flex-1 bg-white border border-gray-300 m-1 py-3">
@@ -31,7 +52,7 @@ const Sales = ({navigation, refreshKey}) => {
             <BanknotesIcon color={'black'} size={18} />
             <Text className="text-sm text-[#b2b2b2]">Продажи</Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('SalesDetail')}>
+          <TouchableOpacity onPress={handleButtonClick}>
             <Text className="text-sm">Подробно</Text>
           </TouchableOpacity>
         </View>
