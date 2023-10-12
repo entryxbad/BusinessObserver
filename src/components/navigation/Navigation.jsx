@@ -20,9 +20,9 @@ const HomeTab = ({navigation}) => {
   return <HomeScreen navigation={navigation} />
 }
 
-const CalendarTab = () => {
-  return <CalendarScreen />
-}
+// const CalendarTab = () => {
+//   return <CalendarScreen />
+// }
 const GraphicTab = () => {
   return <GraphicScreen />
 }
@@ -78,7 +78,7 @@ const Navigation = () => (
           tabBarIcon: () => <HomeIcon color={'black'} size={28} />,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="CalendarTab"
         component={CalendarTab}
         options={{
@@ -86,7 +86,7 @@ const Navigation = () => (
           tabBarLabel: () => null,
           tabBarIcon: () => <CalendarDaysIcon color={'black'} size={28} />,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="GraphicTab"
         component={GraphicTab}
