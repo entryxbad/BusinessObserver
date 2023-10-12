@@ -15,7 +15,7 @@ const HomeScreen = ({navigation}) => {
   }
   return (
     <View className="bg-[#f5f5f5] flex-1 relative">
-      <Header handleRefresh={handleRefresh} />
+      <Header handleRefresh={handleRefresh} navigation={navigation} />
       <ScrollView>
         <Balance navigation={navigation} refreshKey={refreshKey} />
         <Receipts navigation={navigation} refreshKey={refreshKey} />

@@ -3,12 +3,15 @@ import {ArrowPathIcon, UserCircleIcon} from 'react-native-heroicons/outline'
 
 import {logo} from '../config/images'
 
-const Header = ({handleRefresh}) => {
+const Header = ({handleRefresh, navigation}) => {
   return (
     <View className="flex-row bg-white w-full h-11 shadow-sm mb-3 items-center justify-between px-2">
-      <View>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Profile')
+        }}>
         <UserCircleIcon color={'#0dd9e7'} size={28} />
-      </View>
+      </TouchableOpacity>
       <View>
         <Image className="w-48 h-12" source={logo} />
       </View>

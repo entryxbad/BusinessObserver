@@ -4,9 +4,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {HomeIcon} from 'react-native-heroicons/outline'
 import {CalendarDaysIcon} from 'react-native-heroicons/outline'
 import {ChartPieIcon} from 'react-native-heroicons/outline'
-import {ChatBubbleLeftRightIcon} from 'react-native-heroicons/outline'
-import {DocumentTextIcon} from 'react-native-heroicons/outline'
-import {InboxArrowDownIcon} from 'react-native-heroicons/outline'
 
 import BalanceDetailScreen from '../../screens/BalanceDetailScreen'
 import CalendarScreen from '../../screens/CalendarScreen'
@@ -15,6 +12,7 @@ import GraphicScreen from '../../screens/GraphicScreen'
 import HomeScreen from '../../screens/HomeScreen'
 import ReceiptsDetailScreen from '../../screens/ReceiptsDetailScreen'
 import SalesDetailScreen from '../../screens/SalesDetailScreen'
+import AuthScreen from '../../screens/auth/AuthScreen'
 
 const Tab = createBottomTabNavigator()
 
@@ -59,6 +57,11 @@ const HomeStackScreen = () => {
         component={SalesDetailScreen}
         options={{headerTitle: 'Продажи за текущий день'}}
       />
+      <HomeStack.Screen
+        name="Profile"
+        component={AuthScreen}
+        options={{headerTitle: 'Профиль'}}
+      />
     </HomeStack.Navigator>
   )
 }
@@ -98,35 +101,3 @@ const Navigation = () => (
 )
 
 export default Navigation
-
-{
-  /* <Tab.Screen
-  name="Messenger"
-  component={MessengerScreen}
-  options={{
-    headerShown: false,
-    tabBarLabel: () => null,
-    tabBarIcon: () => (
-      <ChatBubbleLeftRightIcon color={'black'} size={28} />
-    ),
-  }}
-/>
-<Tab.Screen
-  name="Documents"
-  component={DocumentsScreen}
-  options={{
-    headerShown: false,
-    tabBarLabel: () => null,
-    tabBarIcon: () => <DocumentTextIcon color={'black'} size={28} />,
-  }}
-/>
-<Tab.Screen
-  name="Inbox"
-  component={InboxScreen}
-  options={{
-    headerShown: false,
-    tabBarLabel: () => null,
-    tabBarIcon: () => <InboxArrowDownIcon color={'black'} size={28} />,
-  }}
-/> */
-}

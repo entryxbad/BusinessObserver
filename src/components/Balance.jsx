@@ -21,25 +21,27 @@ const Balance = ({navigation, refreshKey}) => {
     updateBalance()
   }, [refreshKey])
 
-  const checkLic = async () => {
-    try {
-      const response = await fetchLicense1()
-      return response[0].Status === 'Действительна'
-    } catch (error) {
-      console.log('Error from SalesLic', error)
-      return false
-    }
-  }
+  // const checkLic = async () => {
+  //   try {
+  //     const response = await fetchLicense1()
+  //     return response[0].status === 'Действительна'
+  //   } catch (error) {
+  //     console.log('Error from SalesLic', error)
+  //     return false
+  //   }
+  // }
 
   const handleButtonClick = async () => {
-    const licenseValid = await checkLic()
+    navigation.navigate('BalanceDetail', {balanceData: balance})
 
-    if (licenseValid) {
-      Alert.alert('Поздравляю', 'У вас есть лицензия')
-      navigation.navigate('BalanceDetail', {balanceData: balance})
-    } else {
-      Alert.alert('Ошибка', 'Купите лицензию')
-    }
+    // const licenseValid = await checkLic()
+
+    // if (licenseValid) {
+    //   Alert.alert('Поздравляю', 'У вас есть лицензия')
+    //   navigation.navigate('BalanceDetail', {balanceData: balance})
+    // } else {
+    //   Alert.alert('Ошибка', 'Купите лицензию')
+    // }
   }
 
   return (

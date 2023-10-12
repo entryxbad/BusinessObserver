@@ -21,25 +21,27 @@ const Sales = ({navigation, refreshKey}) => {
     updateSales()
   }, [refreshKey])
 
-  const checkLic = async () => {
-    try {
-      const response = await fetchLicense2()
-      return response[0].Status === 'Действительна'
-    } catch (error) {
-      console.log('Error from SalesLic', error)
-      return false
-    }
-  }
+  // const checkLic = async () => {
+  //   try {
+  //     const response = await fetchLicense2()
+  //     return response[0].status === 'Действительна'
+  //   } catch (error) {
+  //     console.log('Error from SalesLic', error)
+  //     return false
+  //   }
+  // }
 
   const handleButtonClick = async () => {
-    const licenseValid = await checkLic()
+    navigation.navigate('SalesDetail')
 
-    if (licenseValid) {
-      Alert.alert('Поздравляю', 'У вас есть лицензия')
-      navigation.navigate('SalesDetail')
-    } else {
-      Alert.alert('Ошибка', 'Купите лицензию')
-    }
+    // const licenseValid = await checkLic()
+
+    // if (licenseValid) {
+    //   Alert.alert('Поздравляю', 'У вас есть лицензия')
+
+    // } else {
+    //   Alert.alert('Ошибка', 'Купите лицензию')
+    // }
   }
 
   return (
