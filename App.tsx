@@ -1,4 +1,4 @@
-import Navigation from './src/components/navigation/Navigation'
+import Navigation from './src/navigation/Navigation'
 
 const App = () => {
   return (

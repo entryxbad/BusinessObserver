@@ -4,12 +4,12 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {HomeIcon} from 'react-native-heroicons/outline'
 import {ChartPieIcon} from 'react-native-heroicons/outline'
 
-import BalanceDetailScreen from '../../screens/BalanceDetailScreen'
-import ConsumptionDetailScreen from '../../screens/ConsumptionDetailScreen'
-import GraphicScreen from '../../screens/GraphicScreen'
-import HomeScreen from '../../screens/HomeScreen'
-import ReceiptsDetailScreen from '../../screens/ReceiptsDetailScreen'
-import SalesDetailScreen from '../../screens/SalesDetailScreen'
+import BalanceDetailScreen from '../screens/BalanceDetailScreen'
+import ConsumptionDetailScreen from '../screens/ConsumptionDetailScreen'
+import GraphicScreen from '../screens/GraphicScreen'
+import HomeScreen from '../screens/HomeScreen'
+import ReceiptsDetailScreen from '../screens/ReceiptsDetailScreen'
+import SalesDetailScreen from '../screens/SalesDetailScreen'
 
 const Tab = createBottomTabNavigator()
 
