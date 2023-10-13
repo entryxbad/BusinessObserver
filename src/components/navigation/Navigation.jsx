@@ -2,17 +2,14 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {HomeIcon} from 'react-native-heroicons/outline'
-import {CalendarDaysIcon} from 'react-native-heroicons/outline'
 import {ChartPieIcon} from 'react-native-heroicons/outline'
 
 import BalanceDetailScreen from '../../screens/BalanceDetailScreen'
-import CalendarScreen from '../../screens/CalendarScreen'
 import ConsumptionDetailScreen from '../../screens/ConsumptionDetailScreen'
 import GraphicScreen from '../../screens/GraphicScreen'
 import HomeScreen from '../../screens/HomeScreen'
 import ReceiptsDetailScreen from '../../screens/ReceiptsDetailScreen'
 import SalesDetailScreen from '../../screens/SalesDetailScreen'
-import AuthScreen from '../../screens/auth/AuthScreen'
 
 const Tab = createBottomTabNavigator()
 
@@ -56,11 +53,6 @@ const HomeStackScreen = () => {
         name="SalesDetail"
         component={SalesDetailScreen}
         options={{headerTitle: 'Продажи за текущий день'}}
-      />
-      <HomeStack.Screen
-        name="Profile"
-        component={AuthScreen}
-        options={{headerTitle: 'Профиль'}}
       />
     </HomeStack.Navigator>
   )

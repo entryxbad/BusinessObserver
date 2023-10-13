@@ -6,10 +6,7 @@ import {logo} from '../config/images'
 const Header = ({handleRefresh, navigation}) => {
   return (
     <View className="flex-row bg-white w-full h-11 shadow-sm mb-3 items-center justify-between px-2">
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('Profile')
-        }}>
+      <TouchableOpacity>
         <UserCircleIcon color={'#0dd9e7'} size={28} />
       </TouchableOpacity>
       <View>
