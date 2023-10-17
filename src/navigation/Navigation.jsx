@@ -9,9 +9,14 @@ import ConsumptionDetailScreen from '../screens/ConsumptionDetailScreen'
 import GraphicScreen from '../screens/GraphicScreen'
 import HomeScreen from '../screens/HomeScreen'
 import ReceiptsDetailScreen from '../screens/ReceiptsDetailScreen'
+import RegistrationScreen from '../screens/RegistrationScreen'
 import SalesDetailScreen from '../screens/SalesDetailScreen'
 
 const Tab = createBottomTabNavigator()
+
+const Registration = () => {
+  return <RegistrationScreen />
+}
 
 const HomeTab = ({navigation}) => {
   return <HomeScreen navigation={navigation} />
@@ -61,6 +66,11 @@ const HomeStackScreen = () => {
 const Navigation = () => (
   <NavigationContainer>
     <Tab.Navigator>
+      <Tab.Screen
+        name="Registration"
+        component={RegistrationScreen}
+        options={{tabBarLabel: () => null}}
+      />
       <Tab.Screen
         name="HomeTab"
         component={HomeStackScreen}
