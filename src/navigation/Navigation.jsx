@@ -14,17 +14,10 @@ import SalesDetailScreen from '../screens/SalesDetailScreen'
 
 const Tab = createBottomTabNavigator()
 
-const Registration = () => {
-  return <RegistrationScreen />
-}
-
 const HomeTab = ({navigation}) => {
   return <HomeScreen navigation={navigation} />
 }
 
-// const CalendarTab = () => {
-//   return <CalendarScreen />
-// }
 const GraphicTab = () => {
   return <GraphicScreen />
 }
@@ -69,7 +62,7 @@ const Navigation = () => (
       <Tab.Screen
         name="Registration"
         component={RegistrationScreen}
-        options={{tabBarLabel: () => null}}
+        options={{headerShown: false, tabBarLabel: () => null}}
       />
       <Tab.Screen
         name="HomeTab"
@@ -80,15 +73,6 @@ const Navigation = () => (
           tabBarIcon: () => <HomeIcon color={'black'} size={28} />,
         }}
       />
-      {/* <Tab.Screen
-        name="CalendarTab"
-        component={CalendarTab}
-        options={{
-          headerShown: false,
-          tabBarLabel: () => null,
-          tabBarIcon: () => <CalendarDaysIcon color={'black'} size={28} />,
-        }}
-      /> */}
       <Tab.Screen
         name="GraphicTab"
         component={GraphicTab}
