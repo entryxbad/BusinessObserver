@@ -1,12 +1,12 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
+import React, {useState} from 'react'
 import {HomeIcon} from 'react-native-heroicons/outline'
 import {ChartPieIcon} from 'react-native-heroicons/outline'
 
 import BalanceDetailScreen from '../screens/BalanceDetailScreen'
 import ConsumptionDetailScreen from '../screens/ConsumptionDetailScreen'
-import GraphicScreen from '../screens/GraphicScreen'
 import HomeScreen from '../screens/HomeScreen'
 import ReceiptsDetailScreen from '../screens/ReceiptsDetailScreen'
 import RegistrationScreen from '../screens/RegistrationScreen'
@@ -56,34 +56,41 @@ const HomeStackScreen = () => {
   )
 }
 
-const Navigation = () => (
-  <NavigationContainer>
-    <Tab.Navigator>
-      <Tab.Screen
-        name="Registration"
-        component={RegistrationScreen}
-        options={{headerShown: false, tabBarLabel: () => null}}
-      />
-      <Tab.Screen
-        name="HomeTab"
-        component={HomeStackScreen}
-        options={{
-          headerShown: false,
-          tabBarLabel: () => null,
-          tabBarIcon: () => <HomeIcon color={'black'} size={28} />,
-        }}
-      />
-      <Tab.Screen
-        name="GraphicTab"
-        component={GraphicTab}
-        options={{
-          headerShown: false,
-          tabBarLabel: () => null,
-          tabBarIcon: () => <ChartPieIcon color={'black'} size={28} />,
-        }}
-      />
-    </Tab.Navigator>
-  </NavigationContainer>
-)
+const Navigation = () => {
+  const [isRegistered, setIsRegistered] = useState(false)
+
+  const handleRegistrationSuccess = () => {
+    setIsRegistered(true)
+  }
+
+  return (
+    <NavigationContainer>
+      {isRegistered ? (
+        <Tab.Navigator>
+          <Tab.Screen
+            name="HomeTab"
+            component={HomeStackScreen}
+            options={{
+              headerShown: false,
+              tabBarLabel: () => null,
+              tabBarIcon: () => <HomeIcon color={'black'} size={28} />,
+            }}
+          />
+          <Tab.Screen
+            name="GraphicTab"
+            component={GraphicTab}
+            options={{
+              headerShown: false,
+              tabBarLabel: () => null,
+              tabBarIcon: () => <ChartPieIcon color={'black'} size={28} />,
+            }}
+          />
+        </Tab.Navigator>
+      ) : (
+        <RegistrationScreen onRegistrationSuccess={handleRegistrationSuccess} />
+      )}
+    </NavigationContainer>
+  )
+}
 
 export default Navigation

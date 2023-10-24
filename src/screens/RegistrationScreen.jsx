@@ -5,7 +5,7 @@ import DeviceInfo from 'react-native-device-info'
 
 import {registerDeviceUrl} from '../constants/Constants'
 
-const RegistrationScreen = ({navigation}) => {
+const RegistrationScreen = ({onRegistrationSuccess}) => {
   const [user, setUser] = useState({
     id: '',
     surName: '',
@@ -51,12 +51,30 @@ const RegistrationScreen = ({navigation}) => {
       })
       .then(data => {
         console.log('Успешный ответ от сервера:', data)
-        navigation.navigate('HomeTab')
+        onRegistrationSuccess()
       })
       .catch(error => {
         console.error('Ошибка регистрации:', error)
         console.error('Ошибка сети или сервера:', error.message)
       })
+  }
+
+  const validateTextInput = text => {
+    const regex = /^[A-Za-zА-Яа-я ]+$/
+    if (regex.test(text) || text === '') {
+      return text
+    } else {
+      return user.surName
+    }
+  }
+
+  const validateNumberInput = (text, maxChars) => {
+    const regex = /^\d+$/
+    if (regex.test(text) && text.length <= maxChars) {
+      return text
+    } else {
+      return text.slice(0, -1)
+    }
   }
 
   return (
@@ -66,25 +84,32 @@ const RegistrationScreen = ({navigation}) => {
         className="border-gray-300 border rounded-full pl-5"
         placeholder="Фамилия"
         value={user.surName}
-        onChangeText={text => setUser({...user, surName: text})}
+        onChangeText={text =>
+          setUser({...user, surName: validateTextInput(text)})
+        }
       />
       <TextInput
         className="border-gray-300 border rounded-full pl-5"
         placeholder="Имя"
         value={user.name}
-        onChangeText={text => setUser({...user, name: text})}
+        onChangeText={text => setUser({...user, name: validateTextInput(text)})}
       />
       <TextInput
         className="border-gray-300 border rounded-full pl-5"
         placeholder="Отчество"
         value={user.middleName}
-        onChangeText={text => setUser({...user, middleName: text})}
+        onChangeText={text =>
+          setUser({...user, middleName: validateTextInput(text)})
+        }
       />
       <TextInput
         className="border-gray-300 border rounded-full pl-5"
         placeholder="ИНН"
         value={user.inn}
-        onChangeText={text => setUser({...user, inn: text})}
+        onChangeText={text =>
+          setUser({...user, inn: validateNumberInput(text, 12)})
+        }
+        keyboardType="numeric"
       />
 
       <TouchableOpacity
@@ -92,7 +117,9 @@ const RegistrationScreen = ({navigation}) => {
           handleRegistration()
         }}
         className="mx-auto bg-[#0dd9e7] py-3 px-10 rounded-full">
-        <Text className="text-base font-semibold text-black">Регистрация</Text>
+        <Text className="text-base font-semibold text-black">
+          Зарегистрироваться
+        </Text>
       </TouchableOpacity>
     </View>
   )
