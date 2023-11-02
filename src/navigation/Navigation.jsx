@@ -7,6 +7,7 @@ import {ChartPieIcon} from 'react-native-heroicons/outline'
 
 import BalanceDetailScreen from '../screens/BalanceDetailScreen'
 import ConsumptionDetailScreen from '../screens/ConsumptionDetailScreen'
+import GraphicScreen from '../screens/GraphicScreen'
 import HomeScreen from '../screens/HomeScreen'
 import ReceiptsDetailScreen from '../screens/ReceiptsDetailScreen'
 import RegistrationScreen from '../screens/RegistrationScreen'

@@ -4,12 +4,14 @@ import {encode as base64Encode} from 'base-64'
 import React, {useEffect, useState} from 'react'
 import {Text, TextInput, TouchableOpacity, View} from 'react-native'
 import DeviceInfo from 'react-native-device-info'
+import {TextInputMask} from 'react-native-masked-text'
 
 import {registerDeviceUrl} from '../constants/Constants'
 
 const RegistrationScreen = ({onRegistrationSuccess}) => {
   const navigation = useNavigation()
 
+  const [isValid, setIsValid] = useState(true)
   const [step, setStep] = useState(1)
   const [user, setUser] = useState({
     id: '',
@@ -40,38 +42,38 @@ const RegistrationScreen = ({onRegistrationSuccess}) => {
     setStep(step + 1)
   }
 
-  const handleTimeInput = text => {
-    // Удаляем все символы, кроме цифр
-    const cleanedText = text.replace(/[^0-9]/g, '')
+  // const handleTimeInput = text => {
+  //   // Удаляем все символы, кроме цифр
+  //   const cleanedText = text.replace(/[^0-9]/g, '')
 
-    // Ограничиваем ввод до 4 символов (например, "2359")
-    if (cleanedText.length > 4) {
-      return
-    }
+  //   // Ограничиваем ввод до 4 символов (например, "2359")
+  //   if (cleanedText.length > 4) {
+  //     return
+  //   }
 
-    // Разделяем текст на часы и минуты
-    let hours = cleanedText.slice(0, 2)
-    let minutes = cleanedText.slice(2, 4)
+  //   // Разделяем текст на часы и минуты
+  //   let hours = cleanedText.slice(0, 2)
+  //   let minutes = cleanedText.slice(2, 4)
 
-    // Проверяем, что часы и минуты являются числами и соответствуют допустимым значениям
-    if (
-      hours !== '' &&
-      (isNaN(hours) || parseInt(hours) < 0 || parseInt(hours) > 23)
-    ) {
-      hours = ''
-    }
+  //   // Проверяем, что часы и минуты являются числами и соответствуют допустимым значениям
+  //   if (
+  //     hours !== '' &&
+  //     (isNaN(hours) || parseInt(hours) < 0 || parseInt(hours) > 23)
+  //   ) {
+  //     hours = ''
+  //   }
 
-    if (
-      minutes !== '' &&
-      (isNaN(minutes) || parseInt(minutes) < 0 || parseInt(minutes) > 59)
-    ) {
-      minutes = ''
-    }
+  //   if (
+  //     minutes !== '' &&
+  //     (isNaN(minutes) || parseInt(minutes) < 0 || parseInt(minutes) > 59)
+  //   ) {
+  //     minutes = ''
+  //   }
 
-    // Форматируем ввод с разделителем ":" и обновляем состояние
-    const formattedTime = hours + (minutes !== '' ? ':' : '') + minutes
-    setUser({...user, time: formattedTime})
-  }
+  //   // Форматируем ввод с разделителем ":" и обновляем состояние
+  //   const formattedTime = hours + (minutes !== '' ? ':' : '') + minutes
+  //   setUser({...user, time: formattedTime})
+  // }
 
   const handleRegistration = () => {
     const username = 'admin'
@@ -123,6 +125,27 @@ const RegistrationScreen = ({onRegistrationSuccess}) => {
     }
   }
 
+  const isEmailValid = email => {
+    // Регулярное выражение для проверки валидности email-адреса
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+
+    return emailPattern.test(email)
+  }
+
+  const handleEmailChange = text => {
+    setUser({...user, email: text})
+    setIsValid(isEmailValid(text))
+  }
+
+  const handlePhoneNumberChange = text => {
+    const cleanedText = text.replace(/8/g, '')
+    setUser({...user, phoneNumber: cleanedText})
+  }
+
+  const handleTimeInput = text => {
+    return text // Просто возвращает введенный текст
+  }
+
   return (
     <View className="flex-1 justify-center px-2">
       <Text className="text-black text-bold text-3xl mx-auto mb-5">
@@ -162,10 +185,10 @@ const RegistrationScreen = ({onRegistrationSuccess}) => {
         </View>
       )}
       {step === 2 && (
-        <View className="space-y-5">
+        <View>
           {/* Экран для ввода инн и email */}
           <TextInput
-            className="border-gray-300 border rounded-full pl-5"
+            className="border-gray-300 border rounded-full pl-5 mb-5"
             placeholder="ИНН"
             value={user.inn}
             onChangeText={text =>
@@ -173,47 +196,74 @@ const RegistrationScreen = ({onRegistrationSuccess}) => {
             }
             keyboardType="numeric"
           />
-          <TextInput
+          <TextInputMask
             className="border-gray-300 border rounded-full pl-5"
+            type={'custom'}
+            options={{
+              mask: '*****************************************@****.***',
+            }}
             placeholder="Email"
             value={user.email}
-            onChangeText={text =>
-              setUser({...user, email: validateTextInput(text)})
-            }
+            onChangeText={handleEmailChange}
             keyboardType="email-address"
+            autoCapitalize="none"
           />
-          {/* Другие поля для инн и email */}
+          {!isValid && (
+            <Text className="pl-5 text-red-600 mt-2">
+              Неверный формат email
+            </Text>
+          )}
           <TouchableOpacity
             onPress={handleNextStep}
-            className="mx-auto bg-[#0dd9e7] py-3 px-10 rounded-full">
+            className="mx-auto bg-[#0dd9e7] py-3 px-10 rounded-full mt-5">
             <Text className="text-base font-semibold text-black">Далее</Text>
           </TouchableOpacity>
         </View>
       )}
       {step === 3 && (
-        <View className="space-y-5">
+        <View>
+          <View className="items-center">
+            <Text className="text-sm">
+              Введите номер телефона и удобное время.
+            </Text>
+            <Text className="text-sm mb-5">Наш оператор свяжется с Вами.</Text>
+          </View>
           {/* Экран для ввода номера телефона и времени для обратной связи */}
-          <TextInput
-            className="border-gray-300 border rounded-full pl-5"
+          <TextInputMask
+            className="border-gray-300 border rounded-full pl-5 mb-5"
+            type={'custom'}
+            options={{
+              mask: '+7 (999) 999-99-99',
+            }}
             placeholder="Номер телефона"
             value={user.phoneNumber}
-            onChangeText={text =>
-              setUser({...user, phoneNumber: validateNumberInput(text, 12)})
-            }
-            keyboardType="numeric"
+            onChangeText={handlePhoneNumberChange}
+            keyboardType="phone-pad"
           />
-          <TextInput
+          <TextInputMask
+            className="border-gray-300 border rounded-full pl-5"
+            type={'datetime'}
+            options={{
+              format: 'DD/MM HH:mm',
+            }}
+            placeholder="Число/Месяц Часы/Минуты"
+            value={user.time}
+            onChangeText={text =>
+              setUser({...user, time: handleTimeInput(text)})
+            }
+          />
+          {/* <TextInput
             className="border-gray-300 border rounded-full pl-5"
             placeholder="Время (HH:mm)"
             value={user.time}
             onChangeText={text => handleTimeInput(text)}
             maxLength={5}
             keyboardType="numeric"
-          />
+          /> */}
           {/* Другие поля для номера телефона и времени для обратной связи */}
           <TouchableOpacity
             onPress={handleRegistration}
-            className="mx-auto bg-[#0dd9e7] py-3 px-10 rounded-full">
+            className="mx-auto bg-[#0dd9e7] py-3 px-10 rounded-full mt-5">
             <Text className="text-base font-semibold text-black">
               Зарегистрироваться
             </Text>
