@@ -1,4 +1,3 @@
-// Ваш компонент RegistrationScreen
 import {useNavigation, useRoute} from '@react-navigation/native'
 import {encode as base64Encode} from 'base-64'
 import React, {useEffect, useState} from 'react'
@@ -6,6 +5,7 @@ import {Alert, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 import {TextInputMask} from 'react-native-masked-text'
 
+import {setItem} from '../config/storeData'
 import {registerDeviceUrl} from '../constants/Constants'
 
 const RegistrationScreen = () => {
@@ -32,6 +32,7 @@ const RegistrationScreen = () => {
     DeviceInfo.getUniqueId()
       .then(deviceId => {
         setUser({...user, id: deviceId})
+        setItem('deviceUniqueId', deviceId)
       })
       .catch(error => {
         console.error(

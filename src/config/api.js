@@ -1,5 +1,7 @@
 import {encode as base64Encode} from 'base-64'
 
+import {getItem} from './storeData'
+
 const url = 'https://7601-92-50-180-214.ngrok-free.app'
 
 const fetchBalance = async () => {
@@ -205,6 +207,8 @@ const fetchSalesOrgs = async () => {
 const fetchLicense1 = async () => {
   const username = 'admin'
 
+  const id = await getItem('deviceUniqueId')
+
   const requestOptions = {
     method: 'GET',
     headers: {
@@ -214,7 +218,7 @@ const fetchLicense1 = async () => {
 
   try {
     const response = await fetch(
-      'https://7601-92-50-180-214.ngrok-free.app/servLic/hs/licensing/info/1',
+      `https://7601-92-50-180-214.ngrok-free.app/servLic/hs/licensing/info/${id}`,
       requestOptions,
     )
     if (!response.ok) {

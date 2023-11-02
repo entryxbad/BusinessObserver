@@ -1,12 +1,33 @@
-import {Text, TouchableOpacity, View} from 'react-native'
+import {Alert, Text, TouchableOpacity, View} from 'react-native'
+
+import {fetchLicense1} from '../config/api'
 
 const WaitScreen = () => {
+  const handleCheckLicense = async () => {
+    try {
+      const licenseData = await fetchLicense1()
+      console.log('Данные из fetchLicense1:', licenseData)
+
+      // Проверьте данные и решите, нужно ли перейти на HomeTab
+      if (!licenseData) {
+        navigation.navigate('HomeTab')
+      } else {
+        // Показать сообщение, что лицензия не активирована
+        Alert.alert('Ваша лицензия ещё не активирована.')
+      }
+    } catch (error) {
+      console.error('Ошибка при проверке лицензии:', error)
+    }
+  }
+
   return (
     <View className="flex-1 items-center justify-center">
       <Text className="text-sm">
         Пожалуйста, подождите подтверждения регистрации.
       </Text>
-      <TouchableOpacity className="mx-auto bg-[#0dd9e7] py-3 w-52 items-center px-10 rounded-full mt-5">
+      <TouchableOpacity
+        onPress={() => handleCheckLicense()}
+        className="mx-auto bg-[#0dd9e7] py-3 w-52 items-center px-10 rounded-full mt-5">
         <Text className="text-base font-semibold text-black">Войти</Text>
       </TouchableOpacity>
     </View>
