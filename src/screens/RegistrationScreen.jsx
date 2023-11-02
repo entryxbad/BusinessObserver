@@ -1,15 +1,18 @@
 // Ваш компонент RegistrationScreen
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation, useRoute} from '@react-navigation/native'
 import {encode as base64Encode} from 'base-64'
 import React, {useEffect, useState} from 'react'
-import {Text, TextInput, TouchableOpacity, View} from 'react-native'
+import {Alert, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 import {TextInputMask} from 'react-native-masked-text'
 
 import {registerDeviceUrl} from '../constants/Constants'
 
-const RegistrationScreen = ({onRegistrationSuccess}) => {
+const RegistrationScreen = () => {
   const navigation = useNavigation()
+  const route = useRoute()
+
+  const {onRegistrationSuccess} = route.params || {}
 
   const [isValid, setIsValid] = useState(true)
   const [step, setStep] = useState(1)
@@ -38,48 +41,40 @@ const RegistrationScreen = ({onRegistrationSuccess}) => {
       })
   }, [])
 
+  const isStepValid = () => {
+    if (step === 1) {
+      return user.surName && user.name && user.middleName
+    } else if (step === 2) {
+      return user.inn && user.email && isValid
+    } else if (step === 3) {
+      return user.phoneNumber && user.time
+    }
+    return false // Для остальных случаев
+  }
+
   const handleNextStep = () => {
+    if (!isStepValid()) {
+      Alert.alert('Внимание', 'Пожалуйста, заполните все обязательные поля.')
+      return
+    }
     setStep(step + 1)
   }
 
-  // const handleTimeInput = text => {
-  //   // Удаляем все символы, кроме цифр
-  //   const cleanedText = text.replace(/[^0-9]/g, '')
-
-  //   // Ограничиваем ввод до 4 символов (например, "2359")
-  //   if (cleanedText.length > 4) {
-  //     return
-  //   }
-
-  //   // Разделяем текст на часы и минуты
-  //   let hours = cleanedText.slice(0, 2)
-  //   let minutes = cleanedText.slice(2, 4)
-
-  //   // Проверяем, что часы и минуты являются числами и соответствуют допустимым значениям
-  //   if (
-  //     hours !== '' &&
-  //     (isNaN(hours) || parseInt(hours) < 0 || parseInt(hours) > 23)
-  //   ) {
-  //     hours = ''
-  //   }
-
-  //   if (
-  //     minutes !== '' &&
-  //     (isNaN(minutes) || parseInt(minutes) < 0 || parseInt(minutes) > 59)
-  //   ) {
-  //     minutes = ''
-  //   }
-
-  //   // Форматируем ввод с разделителем ":" и обновляем состояние
-  //   const formattedTime = hours + (minutes !== '' ? ':' : '') + minutes
-  //   setUser({...user, time: formattedTime})
-  // }
+  const handlePrevStep = () => {
+    setStep(step - 1)
+  }
 
   const handleRegistration = () => {
+    if (!user.phoneNumber || !user.time) {
+      Alert.alert('Внимание', 'Пожалуйста, заполните поля.')
+      return
+    }
+
     const username = 'admin'
     const password = '12345An'
 
     console.log('Отправляем на сервер:', user)
+
     fetch(`${registerDeviceUrl}`, {
       method: 'POST',
       headers: {
@@ -93,12 +88,14 @@ const RegistrationScreen = ({onRegistrationSuccess}) => {
           return response.json()
         } else {
           console.error('HTTP-запрос не успешен, статус:', response.status)
-          throw new Error('Ошибка сети или сервера')
+          throw Error('Ошибка сети или сервера')
         }
       })
       .then(data => {
         console.log('Успешный ответ от сервера:', data)
-        onRegistrationSuccess()
+        if (onRegistrationSuccess) {
+          onRegistrationSuccess()
+        }
         navigation.navigate('WaitScreen')
       })
       .catch(error => {
@@ -215,8 +212,13 @@ const RegistrationScreen = ({onRegistrationSuccess}) => {
           )}
           <TouchableOpacity
             onPress={handleNextStep}
-            className="mx-auto bg-[#0dd9e7] py-3 px-10 rounded-full mt-5">
+            className="mx-auto bg-[#0dd9e7] py-3 w-52 items-center px-10 rounded-full mt-5">
             <Text className="text-base font-semibold text-black">Далее</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handlePrevStep}
+            className="mx-auto bg-[#0dd9e7] py-3 w-52 items-center px-10 rounded-full mt-5">
+            <Text className="text-base font-semibold text-black">Назад</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -252,21 +254,17 @@ const RegistrationScreen = ({onRegistrationSuccess}) => {
               setUser({...user, time: handleTimeInput(text)})
             }
           />
-          {/* <TextInput
-            className="border-gray-300 border rounded-full pl-5"
-            placeholder="Время (HH:mm)"
-            value={user.time}
-            onChangeText={text => handleTimeInput(text)}
-            maxLength={5}
-            keyboardType="numeric"
-          /> */}
-          {/* Другие поля для номера телефона и времени для обратной связи */}
           <TouchableOpacity
             onPress={handleRegistration}
-            className="mx-auto bg-[#0dd9e7] py-3 px-10 rounded-full mt-5">
+            className="mx-auto bg-[#0dd9e7] py-3 px-10 w-54 rounded-full mt-5">
             <Text className="text-base font-semibold text-black">
               Зарегистрироваться
             </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handlePrevStep}
+            className="mx-auto bg-[#0dd9e7] py-3 w-52 items-center px-10 rounded-full mt-5">
+            <Text className="text-base font-semibold text-black">Назад</Text>
           </TouchableOpacity>
         </View>
       )}

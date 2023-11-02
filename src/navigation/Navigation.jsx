@@ -12,53 +12,53 @@ import HomeScreen from '../screens/HomeScreen'
 import ReceiptsDetailScreen from '../screens/ReceiptsDetailScreen'
 import RegistrationScreen from '../screens/RegistrationScreen'
 import SalesDetailScreen from '../screens/SalesDetailScreen'
+import WaitScreen from '../screens/WaitScreen'
 
 const Tab = createBottomTabNavigator()
+const Stack = createNativeStackNavigator()
 
-const HomeTab = ({navigation}) => {
-  return <HomeScreen navigation={navigation} />
+const HomeTab = () => {
+  return <HomeScreen />
 }
 
 const GraphicTab = () => {
   return <GraphicScreen />
 }
 
-const HomeStack = createNativeStackNavigator()
-
 const HomeStackScreen = () => {
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen
+    <Stack.Navigator>
+      <Stack.Screen
         name="Home"
         component={HomeTab}
         options={{headerShown: false}}
       />
-      <HomeStack.Screen
+      <Stack.Screen
         name="BalanceDetail"
         component={BalanceDetailScreen}
         options={{headerTitle: 'Остаток'}}
       />
-      <HomeStack.Screen
+      <Stack.Screen
         name="ReceiptsDetail"
         component={ReceiptsDetailScreen}
         options={{headerTitle: 'Поступления'}}
       />
-      <HomeStack.Screen
+      <Stack.Screen
         name="ConsumptionDetail"
         component={ConsumptionDetailScreen}
         options={{headerTitle: 'Расход'}}
       />
-      <HomeStack.Screen
+      <Stack.Screen
         name="SalesDetail"
         component={SalesDetailScreen}
         options={{headerTitle: 'Продажи за текущий день'}}
       />
-    </HomeStack.Navigator>
+    </Stack.Navigator>
   )
 }
 
 const Navigation = () => {
-  const [isRegistered, setIsRegistered] = useState(false)
+  const [isRegistered, setIsRegistered] = useState(true)
 
   const handleRegistrationSuccess = () => {
     setIsRegistered(true)
@@ -67,6 +67,20 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       {isRegistered ? (
+        <Stack.Navigator>
+          <Stack.Screen
+            name="RegistrationScreen"
+            component={RegistrationScreen}
+            options={{headerShown: false}}
+            initialParams={{onRegistrationSuccess: handleRegistrationSuccess}}
+          />
+          <Stack.Screen
+            name="WaitScreen"
+            component={WaitScreen}
+            options={{headerTitle: 'Ожидание регистрации'}}
+          />
+        </Stack.Navigator>
+      ) : (
         <Tab.Navigator>
           <Tab.Screen
             name="HomeTab"
@@ -87,8 +101,6 @@ const Navigation = () => {
             }}
           />
         </Tab.Navigator>
-      ) : (
-        <RegistrationScreen onRegistrationSuccess={handleRegistrationSuccess} />
       )}
     </NavigationContainer>
   )
