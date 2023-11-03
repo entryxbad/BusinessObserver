@@ -58,50 +58,46 @@ const HomeStackScreen = () => {
 }
 
 const Navigation = () => {
-  const [isRegistered, setIsRegistered] = useState(true)
-
-  const handleRegistrationSuccess = () => {
-    setIsRegistered(true)
-  }
+  const [isRegistered, setIsRegistered] = useState(false)
 
   return (
     <NavigationContainer>
-      {isRegistered ? (
-        <Stack.Navigator>
+      <Stack.Navigator initialRouteName="RegistrationScreen">
+        {isRegistered ? (
+          <>
+            <Stack.Screen
+              name="WaitScreen"
+              component={WaitScreen}
+              options={{headerTitle: 'Ожидание регистрации'}}
+            />
+            <Tab.Screen
+              name="HomeTab"
+              component={HomeScreen}
+              options={{
+                headerShown: false,
+                tabBarLabel: () => null,
+                tabBarIcon: () => <HomeIcon color={'black'} size={28} />,
+              }}
+            />
+            <Tab.Screen
+              name="GraphicTab"
+              component={GraphicTab}
+              options={{
+                headerShown: false,
+                tabBarLabel: () => null,
+                tabBarIcon: () => <ChartPieIcon color={'black'} size={28} />,
+              }}
+            />
+          </>
+        ) : (
           <Stack.Screen
             name="RegistrationScreen"
             component={RegistrationScreen}
             options={{headerShown: false}}
-            initialParams={{onRegistrationSuccess: handleRegistrationSuccess}}
+            initialParams={{onRegistrationSuccess: () => setIsRegistered(true)}}
           />
-          <Stack.Screen
-            name="WaitScreen"
-            component={WaitScreen}
-            options={{headerTitle: 'Ожидание регистрации'}}
-          />
-        </Stack.Navigator>
-      ) : (
-        <Tab.Navigator>
-          <Tab.Screen
-            name="HomeTab"
-            component={HomeStackScreen}
-            options={{
-              headerShown: false,
-              tabBarLabel: () => null,
-              tabBarIcon: () => <HomeIcon color={'black'} size={28} />,
-            }}
-          />
-          <Tab.Screen
-            name="GraphicTab"
-            component={GraphicTab}
-            options={{
-              headerShown: false,
-              tabBarLabel: () => null,
-              tabBarIcon: () => <ChartPieIcon color={'black'} size={28} />,
-            }}
-          />
-        </Tab.Navigator>
-      )}
+        )}
+      </Stack.Navigator>
     </NavigationContainer>
   )
 }

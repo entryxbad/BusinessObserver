@@ -206,13 +206,15 @@ const fetchSalesOrgs = async () => {
 
 const fetchLicense1 = async () => {
   const username = 'admin'
+  const password = '12345An'
 
   const id = await getItem('deviceUniqueId')
+  console.log('deviceID:', id)
 
   const requestOptions = {
     method: 'GET',
     headers: {
-      Authorization: `Basic ${base64Encode(username)}`,
+      Authorization: `Basic ${base64Encode(`${username}:${password}`)}`,
     },
   }
 

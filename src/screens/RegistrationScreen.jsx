@@ -9,7 +9,6 @@ import {setItem} from '../config/storeData'
 import {registerDeviceUrl} from '../constants/Constants'
 
 const RegistrationScreen = () => {
-  const navigation = useNavigation()
   const route = useRoute()
 
   const {onRegistrationSuccess} = route.params || {}
@@ -97,7 +96,6 @@ const RegistrationScreen = () => {
         if (onRegistrationSuccess) {
           onRegistrationSuccess()
         }
-        navigation.navigate('WaitScreen')
       })
       .catch(error => {
         console.error('Ошибка регистрации:', error)

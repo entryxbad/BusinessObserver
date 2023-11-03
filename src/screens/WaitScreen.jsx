@@ -2,17 +2,15 @@ import {Alert, Text, TouchableOpacity, View} from 'react-native'
 
 import {fetchLicense1} from '../config/api'
 
-const WaitScreen = () => {
+const WaitScreen = ({navigation}) => {
   const handleCheckLicense = async () => {
     try {
       const licenseData = await fetchLicense1()
       console.log('Данные из fetchLicense1:', licenseData)
 
-      // Проверьте данные и решите, нужно ли перейти на HomeTab
-      if (!licenseData) {
+      if (licenseData) {
         navigation.navigate('HomeTab')
       } else {
-        // Показать сообщение, что лицензия не активирована
         Alert.alert('Ваша лицензия ещё не активирована.')
       }
     } catch (error) {
