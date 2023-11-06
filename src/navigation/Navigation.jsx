@@ -1,10 +1,11 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {HomeIcon} from 'react-native-heroicons/outline'
 import {ChartPieIcon} from 'react-native-heroicons/outline'
 
+import {getItem} from '../config/storeData'
 import BalanceDetailScreen from '../screens/BalanceDetailScreen'
 import ConsumptionDetailScreen from '../screens/ConsumptionDetailScreen'
 import GraphicScreen from '../screens/GraphicScreen'
@@ -60,9 +61,19 @@ const HomeStackScreen = () => {
 const Navigation = () => {
   const [isRegistered, setIsRegistered] = useState(false)
 
+  useEffect(() => {
+    // Проверьте значение в AsyncStorage при запуске приложения
+    getItem('isRegistered').then(value => {
+      if (value === 'true') {
+        setIsRegistered(true)
+      }
+    })
+  }, [])
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="RegistrationScreen">
+      <Stack.Navigator
+        initialRouteName={isRegistered ? 'WaitScreen' : 'RegistrationScreen'}>
         {isRegistered ? (
           <>
             <Stack.Screen

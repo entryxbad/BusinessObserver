@@ -1,4 +1,4 @@
-import {useNavigation, useRoute} from '@react-navigation/native'
+import {useRoute} from '@react-navigation/native'
 import {encode as base64Encode} from 'base-64'
 import React, {useEffect, useState} from 'react'
 import {Alert, Text, TextInput, TouchableOpacity, View} from 'react-native'
@@ -94,7 +94,10 @@ const RegistrationScreen = () => {
       .then(data => {
         console.log('Успешный ответ от сервера:', data)
         if (onRegistrationSuccess) {
-          onRegistrationSuccess()
+          // Сохраните информацию о регистрации в AsyncStorage
+          setItem('isRegistered', 'true').then(() => {
+            onRegistrationSuccess()
+          })
         }
       })
       .catch(error => {
