@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react'
-import {Alert, Text, TouchableOpacity, View} from 'react-native'
+import {Text, TouchableOpacity, View} from 'react-native'
 import {CircleStackIcon} from 'react-native-heroicons/outline'
 
-import {fetchBalance, fetchLicense1} from '../config/api'
+import {fetchBalance} from '../config/api'
 import {formatNumber} from '../config/functions'
 
 const Balance = ({navigation, refreshKey}) => {
@@ -21,27 +21,8 @@ const Balance = ({navigation, refreshKey}) => {
     updateBalance()
   }, [refreshKey])
 
-  // const checkLic = async () => {
-  //   try {
-  //     const response = await fetchLicense1()
-  //     return response[0].status === 'Действительна'
-  //   } catch (error) {
-  //     console.log('Error from SalesLic', error)
-  //     return false
-  //   }
-  // }
-
   const handleButtonClick = async () => {
     navigation.navigate('BalanceDetail', {balanceData: balance})
-
-    // const licenseValid = await checkLic()
-
-    // if (licenseValid) {
-    //   Alert.alert('Поздравляю', 'У вас есть лицензия')
-    //   navigation.navigate('BalanceDetail', {balanceData: balance})
-    // } else {
-    //   Alert.alert('Ошибка', 'Купите лицензию')
-    // }
   }
 
   return (

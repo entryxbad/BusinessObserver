@@ -8,7 +8,7 @@ const WaitScreen = ({navigation}) => {
       const licenseData = await fetchLicense1()
       console.log('Данные из fetchLicense1:', licenseData)
 
-      if (licenseData) {
+      if (licenseData[0].status === 'Действительна') {
         navigation.navigate('HomeTab')
       } else {
         Alert.alert('Ваша лицензия ещё не активирована.')

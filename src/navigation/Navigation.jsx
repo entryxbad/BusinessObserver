@@ -18,8 +18,8 @@ import WaitScreen from '../screens/WaitScreen'
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 
-const HomeTab = () => {
-  return <HomeScreen />
+const HomeTab = ({navigation}) => {
+  return <HomeScreen navigation={navigation} />
 }
 
 const GraphicTab = () => {
@@ -83,7 +83,7 @@ const Navigation = () => {
             />
             <Tab.Screen
               name="HomeTab"
-              component={HomeScreen}
+              component={HomeStackScreen}
               options={{
                 headerShown: false,
                 tabBarLabel: () => null,
