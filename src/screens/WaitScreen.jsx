@@ -9,7 +9,7 @@ const WaitScreen = ({navigation}) => {
       console.log('Данные из fetchLicense1:', licenseData)
 
       if (licenseData[0].status === 'Действительна') {
-        navigation.navigate('HomeTab')
+        navigation.navigate('MainTab')
       } else {
         Alert.alert('Ваша лицензия ещё не активирована.')
       }

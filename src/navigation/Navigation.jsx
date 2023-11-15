@@ -58,6 +58,29 @@ const HomeStackScreen = () => {
   )
 }
 
+const MainTab = () => (
+  <Tab.Navigator>
+    <Tab.Screen
+      name="HomeTab"
+      component={HomeStackScreen}
+      options={{
+        headerShown: false,
+        tabBarLabel: () => null,
+        tabBarIcon: () => <HomeIcon color={'black'} size={28} />,
+      }}
+    />
+    <Tab.Screen
+      name="GraphicTab"
+      component={GraphicTab}
+      options={{
+        headerShown: false,
+        tabBarLabel: () => null,
+        tabBarIcon: () => <ChartPieIcon color={'black'} size={28} />,
+      }}
+    />
+  </Tab.Navigator>
+)
+
 const Navigation = () => {
   const [isRegistered, setIsRegistered] = useState(false)
 
@@ -73,41 +96,20 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={isRegistered ? 'WaitScreen' : 'RegistrationScreen'}>
+        screenOptions={{headerShown: false}}
+        initialRouteName="RegistrationScreen">
         {isRegistered ? (
-          <>
-            <Stack.Screen
-              name="WaitScreen"
-              component={WaitScreen}
-              options={{headerTitle: 'Ожидание регистрации'}}
-            />
-            <Tab.Screen
-              name="HomeTab"
-              component={HomeStackScreen}
-              options={{
-                headerShown: false,
-                tabBarLabel: () => null,
-                tabBarIcon: () => <HomeIcon color={'black'} size={28} />,
-              }}
-            />
-            <Tab.Screen
-              name="GraphicTab"
-              component={GraphicTab}
-              options={{
-                headerShown: false,
-                tabBarLabel: () => null,
-                tabBarIcon: () => <ChartPieIcon color={'black'} size={28} />,
-              }}
-            />
-          </>
+          <Stack.Screen name="WaitScreen" component={WaitScreen} />
         ) : (
           <Stack.Screen
             name="RegistrationScreen"
             component={RegistrationScreen}
-            options={{headerShown: false}}
-            initialParams={{onRegistrationSuccess: () => setIsRegistered(true)}}
+            initialParams={{
+              onRegistrationSuccessIdentifier: 'setIsRegisteredTrue',
+            }}
           />
         )}
+        {isRegistered && <Stack.Screen name="MainTab" component={MainTab} />}
       </Stack.Navigator>
     </NavigationContainer>
   )
