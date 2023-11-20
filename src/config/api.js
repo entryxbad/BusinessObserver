@@ -2,7 +2,7 @@ import {encode as base64Encode} from 'base-64'
 
 import {getItem} from './storeData'
 
-const url = 'https://b100-92-50-180-214.ngrok-free.app'
+const url = 'https://96a2-92-50-180-214.ngrok-free.app'
 
 const fetchBalance = async () => {
   const username = 'admin'
@@ -257,6 +257,31 @@ const fetchLicense2 = async () => {
   }
 }
 
+const fetchSalesChart = async () => {
+  const username = 'admin'
+
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      Authorization: `Basic ${base64Encode(username)}`,
+    },
+  }
+
+  try {
+    const response = await fetch(
+      `${url}/apimobile/hs/mobile/sales?chart=1`,
+      requestOptions,
+    )
+    if (!response.ok) {
+      throw new Error('Error from fetchSalesChart')
+    }
+    const data = await response.json()
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 export {
   fetchBalance,
   fetchReceipts,
@@ -268,4 +293,5 @@ export {
   fetchSalesOrgs,
   fetchLicense1,
   fetchLicense2,
+  fetchSalesChart,
 }
