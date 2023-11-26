@@ -37,7 +37,7 @@ const GraphicScreen = () => {
   }, [])
 
   return (
-    <>
+    <ScrollView className="flex-1">
       {isLoading ? (
         <Loading />
       ) : (
@@ -88,7 +88,7 @@ const GraphicScreen = () => {
           </ScrollView>
         </View>
       )}
-    </>
+    </ScrollView>
   )
 }
 
