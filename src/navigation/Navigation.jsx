@@ -105,7 +105,7 @@ const Navigation = () => {
             name="RegistrationScreen"
             component={RegistrationScreen}
             initialParams={{
-              onRegistrationSuccessIdentifier: 'setIsRegisteredTrue',
+              onRegistrationSuccess: 'setIsRegisteredTrue',
             }}
           />
         )}

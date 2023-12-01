@@ -1,18 +1,22 @@
-import {useRoute} from '@react-navigation/native'
+import {useNavigation, useRoute} from '@react-navigation/native'
 import {encode as base64Encode} from 'base-64'
 import React, {useEffect, useState} from 'react'
 import {Alert, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 import {TextInputMask} from 'react-native-masked-text'
+import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
 import {setItem} from '../config/storeData'
 import {registerDeviceUrl} from '../constants/Constants'
 
 const RegistrationScreen = () => {
+  const navigation = useNavigation()
   const route = useRoute()
 
   const {onRegistrationSuccess} = route.params || {}
 
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false)
+  const [selectedTime, setSelectedTime] = useState(null)
   const [isValid, setIsValid] = useState(true)
   const [step, setStep] = useState(1)
   const [user, setUser] = useState({
@@ -97,6 +101,7 @@ const RegistrationScreen = () => {
           // Сохраните информацию о регистрации в AsyncStorage
           setItem('isRegistered', 'true').then(() => {
             onRegistrationSuccess()
+            navigation.navigate('WaitScreen') // Переходим на WaitScreen
           })
         }
       })
@@ -137,12 +142,32 @@ const RegistrationScreen = () => {
   }
 
   const handlePhoneNumberChange = text => {
-    const cleanedText = text.replace(/8/g, '')
-    setUser({...user, phoneNumber: cleanedText})
+    // Заменяем только первую '8' на '+7', остальные '8' оставляем
+    const formattedNumber = text.replace(/^8/, '+7').replace(/(\D)8/g, '$1')
+
+    setUser({...user, phoneNumber: formattedNumber})
   }
 
-  const handleTimeInput = text => {
-    return text // Просто возвращает введенный текст
+  const showTimePicker = () => {
+    setTimePickerVisibility(true)
+  }
+
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false)
+  }
+
+  const handleTimeConfirm = selectedTime => {
+    const formattedTime = selectedTime.toLocaleString('ru-RU', {hour12: false})
+
+    setUser({
+      ...user,
+      time: formattedTime,
+      formattedDateTime:
+        selectedTime.toLocaleDateString() + ' ' + formattedTime,
+    })
+
+    setSelectedTime(selectedTime)
+    hideTimePicker()
   }
 
   return (
@@ -244,18 +269,19 @@ const RegistrationScreen = () => {
             onChangeText={handlePhoneNumberChange}
             keyboardType="phone-pad"
           />
-          <TextInputMask
-            className="border-gray-300 border rounded-full pl-5"
-            type={'datetime'}
-            options={{
-              format: 'DD/MM HH:mm',
-            }}
-            placeholder="Число/Месяц Часы/Минуты"
-            value={user.time}
-            onChangeText={text =>
-              setUser({...user, time: handleTimeInput(text)})
-            }
-          />
+          <TouchableOpacity
+            onPress={showTimePicker}
+            className="border-gray-300 border py-3 pl-5 w-54 rounded-3xl">
+            <Text className={selectedTime ? 'text-black' : 'text-gray-400'}>
+              {selectedTime
+                ? selectedTime.toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })
+                : 'Выберите время'}
+            </Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             onPress={handleRegistration}
             className="mx-auto bg-[#0dd9e7] py-3 px-10 w-54 rounded-full mt-5">
@@ -268,6 +294,14 @@ const RegistrationScreen = () => {
             className="mx-auto bg-[#0dd9e7] py-3 w-52 items-center px-10 rounded-full mt-5">
             <Text className="text-base font-semibold text-black">Назад</Text>
           </TouchableOpacity>
+
+          <DateTimePickerModal
+            isVisible={isTimePickerVisible}
+            mode="time"
+            display="spinner"
+            onConfirm={handleTimeConfirm}
+            onCancel={hideTimePicker}
+          />
         </View>
       )}
     </View>
