@@ -4,7 +4,8 @@ import {getItem} from './storeData'
 
 const url = 'https://a36f-92-50-180-214.ngrok-free.app'
 
-const fetchBalance = async () => {
+const createFetchRequest = async (path, code = '') => {
+  const storedServerAddress = await getItem('serverAddress')
   const username = 'admin'
 
   const requestOptions = {
@@ -16,12 +17,14 @@ const fetchBalance = async () => {
 
   try {
     const response = await fetch(
-      `${url}/apimobile/hs/mobile/balance`,
+      `${storedServerAddress}/apimobile/hs/mobile/${path}${code}`,
       requestOptions,
     )
+
     if (!response.ok) {
-      throw new Error('Error from fetchBalance')
+      throw new Error(`Error from fetch${path}`)
     }
+
     const data = await response.json()
     return data
   } catch (error) {
@@ -29,180 +32,17 @@ const fetchBalance = async () => {
   }
 }
 
-const fetchReceipts = async () => {
-  const username = 'admin'
-
-  const requestOptions = {
-    method: 'GET',
-    headers: {
-      Authorization: `Basic ${base64Encode(username)}`,
-    },
-  }
-
-  try {
-    const response = await fetch(
-      `${url}/apimobile/hs/mobile/receipts`,
-      requestOptions,
-    )
-    if (!response.ok) {
-      throw new Error('Error from fetchBalance')
-    }
-    const data = await response.json()
-    return data
-  } catch (error) {
-    throw error
-  }
-}
-
-const fetchConsumption = async () => {
-  const username = 'admin'
-
-  const requestOptions = {
-    method: 'GET',
-    headers: {
-      Authorization: `Basic ${base64Encode(username)}`,
-    },
-  }
-
-  try {
-    const response = await fetch(
-      `${url}/apimobile/hs/mobile/consumption`,
-      requestOptions,
-    )
-    if (!response.ok) {
-      throw new Error('Error from fetchConsumption')
-    }
-    const data = await response.json()
-    return data
-  } catch (error) {
-    throw error
-  }
-}
-
-const fetchSales = async () => {
-  const username = 'admin'
-
-  const requestOptions = {
-    method: 'GET',
-    headers: {
-      Authorization: `Basic ${base64Encode(username)}`,
-    },
-  }
-
-  try {
-    const response = await fetch(
-      `${url}/apimobile/hs/mobile/sales`,
-      requestOptions,
-    )
-    if (!response.ok) {
-      throw new Error('Error from fetchSales')
-    }
-    const data = await response.json()
-    return data
-  } catch (error) {
-    throw error
-  }
-}
-
-const fetchBalanceOrgs = async () => {
-  const username = 'admin'
-
-  const requestOptions = {
-    method: 'GET',
-    headers: {
-      Authorization: `Basic ${base64Encode(username)}`,
-    },
-  }
-
-  try {
-    const response = await fetch(
-      `${url}/apimobile/hs/mobile/balance?code=all`,
-      requestOptions,
-    )
-    if (!response.ok) {
-      throw new Error('Error from fetchBalanceOrgs')
-    }
-    const data = await response.json()
-    return data
-  } catch (error) {
-    throw error
-  }
-}
-
-const fetchReceiptsOrgs = async () => {
-  const username = 'admin'
-
-  const requestOptions = {
-    method: 'GET',
-    headers: {
-      Authorization: `Basic ${base64Encode(username)}`,
-    },
-  }
-
-  try {
-    const response = await fetch(
-      `${url}/apimobile/hs/mobile/receipts?code=all`,
-      requestOptions,
-    )
-    if (!response.ok) {
-      throw new Error('Error from fetchBalanceOrgs')
-    }
-    const data = await response.json()
-    return data
-  } catch (error) {
-    throw error
-  }
-}
-
-const fetchConsumptionOrgs = async () => {
-  const username = 'admin'
-
-  const requestOptions = {
-    method: 'GET',
-    headers: {
-      Authorization: `Basic ${base64Encode(username)}`,
-    },
-  }
-
-  try {
-    const response = await fetch(
-      `${url}/apimobile/hs/mobile/consumption?code=all`,
-      requestOptions,
-    )
-    if (!response.ok) {
-      throw new Error('Error from fetchBalanceOrgs')
-    }
-    const data = await response.json()
-    return data
-  } catch (error) {
-    throw error
-  }
-}
-
-const fetchSalesOrgs = async () => {
-  const username = 'admin'
-
-  const requestOptions = {
-    method: 'GET',
-    headers: {
-      Authorization: `Basic ${base64Encode(username)}`,
-    },
-  }
-
-  try {
-    const response = await fetch(
-      `${url}/apimobile/hs/mobile/sales?code=all`,
-      requestOptions,
-    )
-    if (!response.ok) {
-      throw new Error('Error from fetchBalanceOrgs')
-    }
-    const data = await response.json()
-    return data
-  } catch (error) {
-    throw error
-  }
-}
+const fetchBalance = async () => createFetchRequest('balance')
+const fetchReceipts = async () => createFetchRequest('receipts')
+const fetchConsumption = async () => createFetchRequest('consumption')
+const fetchSales = async () => createFetchRequest('sales')
+const fetchBalanceOrgs = async () => createFetchRequest('balance', '?code=all')
+const fetchReceiptsOrgs = async () =>
+  createFetchRequest('receipts', '?code=all')
+const fetchConsumptionOrgs = async () =>
+  createFetchRequest('consumption', '?code=all')
+const fetchSalesOrgs = async () => createFetchRequest('sales', '?code=all')
+const fetchSalesChart = async () => createFetchRequest('sales', '?chart=1')
 
 const fetchLicense1 = async () => {
   const username = 'admin'
@@ -232,6 +72,7 @@ const fetchLicense1 = async () => {
     throw error
   }
 }
+
 const fetchLicense2 = async () => {
   const username = 'admin'
 
@@ -257,31 +98,6 @@ const fetchLicense2 = async () => {
   }
 }
 
-const fetchSalesChart = async () => {
-  const username = 'admin'
-
-  const requestOptions = {
-    method: 'GET',
-    headers: {
-      Authorization: `Basic ${base64Encode(username)}`,
-    },
-  }
-
-  try {
-    const response = await fetch(
-      `${url}/apimobile/hs/mobile/sales?chart=1`,
-      requestOptions,
-    )
-    if (!response.ok) {
-      throw new Error('Error from fetchSalesChart')
-    }
-    const data = await response.json()
-    return data
-  } catch (error) {
-    throw error
-  }
-}
-
 export {
   fetchBalance,
   fetchReceipts,
@@ -291,7 +107,7 @@ export {
   fetchReceiptsOrgs,
   fetchConsumptionOrgs,
   fetchSalesOrgs,
+  fetchSalesChart,
   fetchLicense1,
   fetchLicense2,
-  fetchSalesChart,
 }

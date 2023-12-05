@@ -1,12 +1,19 @@
 import {Alert, Text, TouchableOpacity, View} from 'react-native'
 
 import {fetchLicense1} from '../config/api'
+import {setItem} from '../config/storeData'
 
 const WaitScreen = ({navigation}) => {
   const handleCheckLicense = async () => {
     try {
       const licenseData = await fetchLicense1()
       console.log('Данные из fetchLicense1:', licenseData)
+
+      // Извлекаем адрес сервера из данных о лицензии
+      const serverAddress = licenseData[0].serverAddress
+
+      // Сохраняем адрес сервера в AsyncStorage
+      await setItem('serverAddress', serverAddress)
 
       if (licenseData[0].status === 'Действительна') {
         navigation.navigate('MainTab')
