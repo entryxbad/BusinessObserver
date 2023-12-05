@@ -37,7 +37,12 @@ const GraphicScreen = () => {
   }, [])
 
   return (
-    <ScrollView className="flex-1">
+    <ScrollView
+      contentContainerStyle={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
       {isLoading ? (
         <Loading />
       ) : (
