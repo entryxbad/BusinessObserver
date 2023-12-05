@@ -3,7 +3,7 @@ import {Text, TouchableOpacity, View} from 'react-native'
 import {CreditCardIcon} from 'react-native-heroicons/outline'
 
 import {fetchReceipts} from '../config/api'
-import {formatNumber} from '../config/functions'
+import {formatBalance} from '../config/functions'
 
 const Receipts = ({navigation, refreshKey}) => {
   const [receipts, setReceipts] = useState([])
@@ -43,7 +43,7 @@ const Receipts = ({navigation, refreshKey}) => {
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-green-500">
               {/* Расчетные счета */}
-              {formatNumber(
+              {formatBalance(
                 receipts.find(item => item.accountName === 'Расчетные счета')
                   ?.receipts,
               )}{' '}
@@ -58,7 +58,7 @@ const Receipts = ({navigation, refreshKey}) => {
           <View className="flex-1 pl-5">
             <Text className="text-lg font-bold text-green-500">
               {/* Касса организации */}
-              {formatNumber(
+              {formatBalance(
                 receipts.find(item => item.accountName === 'Касса организации')
                   ?.receipts || 0,
               )}{' '}

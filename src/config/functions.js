@@ -1,4 +1,4 @@
-const formatNumber = number => {
+const formatBalance = number => {
   if (typeof number === 'number') {
     return number.toLocaleString('ru-RU', {
       minimumFractionDigits: 2,
@@ -8,4 +8,4 @@ const formatNumber = number => {
   return ''
 }
 
-export {formatNumber}
+export {formatBalance}

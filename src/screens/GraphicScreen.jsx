@@ -28,7 +28,7 @@ const GraphicScreen = () => {
       setSalesChart(formattedData)
       setIsLoading(false)
     } catch (error) {
-      console.log('Ошибка в GraphicScreen.jsx:', error)
+      console.error('Ошибка в GraphicScreen.jsx:', error)
     }
   }
 
@@ -51,7 +51,7 @@ const GraphicScreen = () => {
                   {
                     data: labels.map(day => {
                       const dataForDay = salesChart.find(
-                        item => item.date == day,
+                        item => item.date === parseInt(day),
                       )
                       return dataForDay ? dataForDay.total : 0
                     }),

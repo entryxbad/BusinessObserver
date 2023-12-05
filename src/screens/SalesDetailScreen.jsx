@@ -3,7 +3,7 @@ import {ScrollView, Text, View} from 'react-native'
 
 import Loading from '../components/Loading'
 import {fetchSalesOrgs} from '../config/api'
-import {formatNumber} from '../config/functions'
+import {formatBalance} from '../config/functions'
 
 const SalesDetailScreen = () => {
   const [salesDetail, setSalesDetail] = useState([])
@@ -15,7 +15,7 @@ const SalesDetailScreen = () => {
       setSalesDetail(response)
       setIsLoading(false)
     } catch (error) {
-      console.log('Error from BalanceDetailScreen.jsx:', error)
+      console.log('Error from SalesDetailScreen.jsx:', error)
     }
   }
 
@@ -36,7 +36,7 @@ const SalesDetailScreen = () => {
                 <Text className="text-gray-400 text-lg">{item.partner}</Text>
                 <View className="flex-row items-center justify-between">
                   <Text className="text-black text-lg font-bold">
-                    {formatNumber(item.sales)} {'\u20BD'}
+                    {formatBalance(item.sales)} {'\u20BD'}
                   </Text>
                 </View>
               </View>

@@ -42,14 +42,16 @@ const RegistrationScreen = ({route, navigation}) => {
   }, [])
 
   const isStepValid = () => {
-    if (step === 1) {
-      return user.surName && user.name && user.middleName
-    } else if (step === 2) {
-      return user.inn && user.email && isValid
-    } else if (step === 3) {
-      return user.phoneNumber && user.time
+    switch (step) {
+      case 1:
+        return user.surName && user.name && user.middleName
+      case 2:
+        return user.inn && user.email && isValid
+      case 3:
+        return user.phoneNumber && user.time
+      default:
+        return false
     }
-    return false // Для остальных случаев
   }
 
   const handleNextStep = () => {
@@ -109,28 +111,18 @@ const RegistrationScreen = ({route, navigation}) => {
 
   const validateTextInput = text => {
     const regex = /^[A-Za-zА-Яа-я ]+$/
-    if (regex.test(text) || text === '') {
-      return text
-    } else {
-      return user.surName
-    }
+    return regex.test(text) || text === '' ? text : user.surName
   }
 
   const validateNumberInput = (text, maxChars) => {
     const regex = /^\d+$/
-    if (regex.test(text) && text.length <= maxChars) {
-      return text
-    } else {
-      return text.slice(0, -1)
-    }
+    return regex.test(text) && text.length <= maxChars
+      ? text
+      : text.slice(0, -1)
   }
 
-  const isEmailValid = email => {
-    // Регулярное выражение для проверки валидности email-адреса
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-
-    return emailPattern.test(email)
-  }
+  const isEmailValid = email =>
+    /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)
 
   const handleEmailChange = text => {
     setUser({...user, email: text})
@@ -138,21 +130,14 @@ const RegistrationScreen = ({route, navigation}) => {
   }
 
   const handlePhoneNumberChange = text => {
-    // Проверяем, начинается ли введенный номер с '+7'
     if (text.startsWith('+7')) {
-      // Проверяем, есть ли восьмерка на четвёртом индексе
       if (text.length > 4 && text[4] === '8') {
-        // Если восьмерка найдена, удаляем её
         const formattedNumber = '+7' + text.slice(5)
-
-        // Устанавливаем новое значение в state или где у вас хранится номер
         setUser({...user, phoneNumber: formattedNumber})
       } else {
-        // Если восьмерки не найдено, оставляем номер без изменений
         setUser({...user, phoneNumber: text})
       }
     } else {
-      // Если номер не начинается с '+7', оставляем его без изменений
       setUser({...user, phoneNumber: text})
     }
   }
@@ -167,152 +152,142 @@ const RegistrationScreen = ({route, navigation}) => {
 
   const handleTimeConfirm = selectedTime => {
     const formattedTime = selectedTime.toLocaleString('ru-RU', {hour12: false})
-
     setUser({
       ...user,
       time: formattedTime,
       formattedDateTime:
         selectedTime.toLocaleDateString() + ' ' + formattedTime,
     })
-
     setSelectedTime(selectedTime)
     hideTimePicker()
   }
+
+  const renderStep1 = () => (
+    <View className="space-y-5">
+      <TextInput
+        className="border-gray-300 border rounded-full pl-5"
+        placeholder="Фамилия"
+        value={user.surName}
+        onChangeText={text =>
+          setUser({...user, surName: validateTextInput(text)})
+        }
+      />
+      <TextInput
+        className="border-gray-300 border rounded-full pl-5"
+        placeholder="Имя"
+        value={user.name}
+        onChangeText={text => setUser({...user, name: validateTextInput(text)})}
+      />
+      <TextInput
+        className="border-gray-300 border rounded-full pl-5"
+        placeholder="Отчество"
+        value={user.middleName}
+        onChangeText={text =>
+          setUser({...user, middleName: validateTextInput(text)})
+        }
+      />
+      <TouchableOpacity
+        className="mx-auto bg-[#0dd9e7] py-3 w-52 items-center rounded-full"
+        onPress={handleNextStep}>
+        <Text className="text-base font-semibold text-black">Далее</Text>
+      </TouchableOpacity>
+    </View>
+  )
+
+  const renderStep2 = () => (
+    <View>
+      <TextInput
+        className="border-gray-300 border rounded-full pl-5 mb-5"
+        placeholder="ИНН"
+        value={user.inn}
+        onChangeText={text =>
+          setUser({...user, inn: validateNumberInput(text, 12)})
+        }
+        keyboardType="numeric"
+      />
+      <TextInputMask
+        className="border-gray-300 border rounded-full pl-5"
+        type={'custom'}
+        options={{mask: '*****************************************@****.***'}}
+        placeholder="Email"
+        value={user.email}
+        onChangeText={handleEmailChange}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+      {!isValid && (
+        <Text className="pl-5 text-red-600 mt-2">Неверный формат email</Text>
+      )}
+      <TouchableOpacity
+        className="mx-auto bg-[#0dd9e7] py-3 w-52 items-center px-10 rounded-full mt-5"
+        onPress={handleNextStep}>
+        <Text className="text-base font-semibold text-black">Далее</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        className="mx-auto bg-[#0dd9e7] py-3 w-52 items-center px-10 rounded-full mt-5"
+        onPress={handlePrevStep}>
+        <Text className="text-base font-semibold text-black">Назад</Text>
+      </TouchableOpacity>
+    </View>
+  )
+
+  const renderStep3 = () => (
+    <View>
+      <View className="items-center">
+        <Text className="text-sm">Введите номер телефона и удобное время.</Text>
+        <Text className="text-sm mb-5">Наш оператор свяжется с Вами.</Text>
+      </View>
+      <TextInputMask
+        className="border-gray-300 border rounded-full pl-5 mb-5"
+        type={'custom'}
+        options={{mask: '+7 (999) 999-99-99'}}
+        placeholder="Номер телефона"
+        value={user.phoneNumber}
+        onChangeText={handlePhoneNumberChange}
+        keyboardType="phone-pad"
+      />
+      <TouchableOpacity
+        className="border-gray-300 border py-3 pl-5 w-54 rounded-3xl"
+        onPress={showTimePicker}>
+        <Text className={selectedTime ? 'text-black' : 'text-gray-400'}>
+          {selectedTime
+            ? selectedTime.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+              })
+            : 'Выберите время'}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        className="mx-auto bg-[#0dd9e7] py-3 px-10 w-54 rounded-full mt-5"
+        onPress={handleRegistration}>
+        <Text className="text-base font-semibold text-black">
+          Зарегистрироваться
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        className="mx-auto items-center bg-[#0dd9e7] py-3 px-10 w-56 rounded-full mt-5"
+        onPress={handlePrevStep}>
+        <Text className="text-base font-semibold text-black">Назад</Text>
+      </TouchableOpacity>
+      <DateTimePickerModal
+        isVisible={isTimePickerVisible}
+        mode="time"
+        display="spinner"
+        onConfirm={handleTimeConfirm}
+        onCancel={hideTimePicker}
+      />
+    </View>
+  )
 
   return (
     <View className="flex-1 justify-center px-2">
       <Text className="text-black text-bold text-3xl mx-auto mb-5">
         Регистрация
       </Text>
-      {step === 1 && (
-        <View className="space-y-5">
-          <TextInput
-            className="border-gray-300 border rounded-full pl-5"
-            placeholder="Фамилия"
-            value={user.surName}
-            onChangeText={text =>
-              setUser({...user, surName: validateTextInput(text)})
-            }
-          />
-          <TextInput
-            className="border-gray-300 border rounded-full pl-5"
-            placeholder="Имя"
-            value={user.name}
-            onChangeText={text =>
-              setUser({...user, name: validateTextInput(text)})
-            }
-          />
-          <TextInput
-            className="border-gray-300 border rounded-full pl-5"
-            placeholder="Отчество"
-            value={user.middleName}
-            onChangeText={text =>
-              setUser({...user, middleName: validateTextInput(text)})
-            }
-          />
-          <TouchableOpacity
-            onPress={handleNextStep}
-            className="mx-auto bg-[#0dd9e7] py-3 w-52 items-center rounded-full">
-            <Text className="text-base font-semibold text-black">Далее</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      {step === 2 && (
-        <View>
-          {/* Экран для ввода инн и email */}
-          <TextInput
-            className="border-gray-300 border rounded-full pl-5 mb-5"
-            placeholder="ИНН"
-            value={user.inn}
-            onChangeText={text =>
-              setUser({...user, inn: validateNumberInput(text, 12)})
-            }
-            keyboardType="numeric"
-          />
-          <TextInputMask
-            className="border-gray-300 border rounded-full pl-5"
-            type={'custom'}
-            options={{
-              mask: '*****************************************@****.***',
-            }}
-            placeholder="Email"
-            value={user.email}
-            onChangeText={handleEmailChange}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          {!isValid && (
-            <Text className="pl-5 text-red-600 mt-2">
-              Неверный формат email
-            </Text>
-          )}
-          <TouchableOpacity
-            onPress={handleNextStep}
-            className="mx-auto bg-[#0dd9e7] py-3 w-52 items-center px-10 rounded-full mt-5">
-            <Text className="text-base font-semibold text-black">Далее</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={handlePrevStep}
-            className="mx-auto bg-[#0dd9e7] py-3 w-52 items-center px-10 rounded-full mt-5">
-            <Text className="text-base font-semibold text-black">Назад</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      {step === 3 && (
-        <View>
-          <View className="items-center">
-            <Text className="text-sm">
-              Введите номер телефона и удобное время.
-            </Text>
-            <Text className="text-sm mb-5">Наш оператор свяжется с Вами.</Text>
-          </View>
-          {/* Экран для ввода номера телефона и времени для обратной связи */}
-          <TextInputMask
-            className="border-gray-300 border rounded-full pl-5 mb-5"
-            type={'custom'}
-            options={{
-              mask: '+7 (999) 999-99-99',
-            }}
-            placeholder="Номер телефона"
-            value={user.phoneNumber}
-            onChangeText={handlePhoneNumberChange}
-            keyboardType="phone-pad"
-          />
-          <TouchableOpacity
-            onPress={showTimePicker}
-            className="border-gray-300 border py-3 pl-5 w-54 rounded-3xl">
-            <Text className={selectedTime ? 'text-black' : 'text-gray-400'}>
-              {selectedTime
-                ? selectedTime.toLocaleTimeString([], {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })
-                : 'Выберите время'}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={handleRegistration}
-            className="mx-auto bg-[#0dd9e7] py-3 px-10 w-54 rounded-full mt-5">
-            <Text className="text-base font-semibold text-black">
-              Зарегистрироваться
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={handlePrevStep}
-            className="mx-auto bg-[#0dd9e7] py-3 w-52 items-center px-10 rounded-full mt-5">
-            <Text className="text-base font-semibold text-black">Назад</Text>
-          </TouchableOpacity>
-
-          <DateTimePickerModal
-            isVisible={isTimePickerVisible}
-            mode="time"
-            display="spinner"
-            onConfirm={handleTimeConfirm}
-            onCancel={hideTimePicker}
-          />
-        </View>
-      )}
+      {step === 1 && renderStep1()}
+      {step === 2 && renderStep2()}
+      {step === 3 && renderStep3()}
     </View>
   )
 }

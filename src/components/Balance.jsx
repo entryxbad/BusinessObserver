@@ -3,7 +3,7 @@ import {Text, TouchableOpacity, View} from 'react-native'
 import {CircleStackIcon} from 'react-native-heroicons/outline'
 
 import {fetchBalance} from '../config/api'
-import {formatNumber} from '../config/functions'
+import {formatBalance} from '../config/functions'
 
 const Balance = ({navigation, refreshKey}) => {
   const [balance, setBalance] = useState([])
@@ -45,7 +45,7 @@ const Balance = ({navigation, refreshKey}) => {
           {/* First col */}
           <View className="flex-1 border-r border-gray-300">
             <Text className="text-lg font-bold text-black">
-              {formatNumber(
+              {formatBalance(
                 balance.find(item => item.accountName === 'Расчетные счета')
                   ?.balance,
               )}{' '}
@@ -59,7 +59,7 @@ const Balance = ({navigation, refreshKey}) => {
           {/* Second col */}
           <View className="flex-1 pl-5">
             <Text className="text-lg font-bold text-black">
-              {formatNumber(
+              {formatBalance(
                 balance.find(item => item.accountName === 'Касса организации')
                   ?.balance || 0,
               )}{' '}

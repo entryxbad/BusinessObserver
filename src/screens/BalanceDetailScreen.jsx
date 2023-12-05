@@ -4,7 +4,7 @@ import {ScrollView, Text, View} from 'react-native'
 
 import Loading from '../components/Loading'
 import {fetchBalanceOrgs} from '../config/api'
-import {formatNumber} from '../config/functions'
+import {formatBalance} from '../config/functions'
 
 const BalanceDetailScreen = () => {
   const [balanceDetail, setBalanceDetail] = useState([])
@@ -19,7 +19,7 @@ const BalanceDetailScreen = () => {
       setBalanceDetail(response)
       setIsLoading(false)
     } catch (error) {
-      console.log('Error from BalanceDetailScreen.jsx:', error)
+      console.error('Error from BalanceDetailScreen.jsx:', error)
     }
   }
 
@@ -28,19 +28,19 @@ const BalanceDetailScreen = () => {
   }, [])
 
   const groupedData = {}
-  balanceDetail.forEach(org => {
-    if (!groupedData[org.organization]) {
-      groupedData[org.organization] = []
+  balanceDetail.forEach(account => {
+    if (!groupedData[account.organization]) {
+      groupedData[account.organization] = []
     }
-    const existingOrg = groupedData[org.organization].find(
-      item => item.accountName === org.accountName,
+    const existingAccount = groupedData[account.organization].find(
+      item => item.accountName === account.accountName,
     )
-    if (existingOrg) {
-      existingOrg.balance = org.balance
+    if (existingAccount) {
+      existingAccount.consumption = account.consumption
     } else {
-      groupedData[org.organization].push({
-        accountName: org.accountName,
-        balance: org.balance,
+      groupedData[account.organization].push({
+        accountName: account.accountName,
+        balance: account.consumption,
       })
     }
   })
@@ -67,7 +67,7 @@ const BalanceDetailScreen = () => {
                   return (
                     <View className="flex-row justify-between" key={index}>
                       <Text className="text-black font-bold text-lg">
-                        {formatNumber(
+                        {formatBalance(
                           item.bank !== undefined ? item.bank : item.account,
                         )}{' '}
                         {'\u20BD'}
@@ -104,7 +104,7 @@ const BalanceDetailScreen = () => {
 
                   <View className="flex-row justify-between">
                     <Text className="text-black text-lg">
-                      {formatNumber(
+                      {formatBalance(
                         groupedData[organization].find(
                           item => item.accountName === 'Расчетные счета',
                         )?.balance || 0,
@@ -112,7 +112,7 @@ const BalanceDetailScreen = () => {
                       {'\u20BD'}
                     </Text>
                     <Text className="text-black text-lg">
-                      {formatNumber(
+                      {formatBalance(
                         groupedData[organization].find(
                           item => item.accountName === 'Касса организации',
                         )?.balance || 0,
