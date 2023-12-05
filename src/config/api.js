@@ -2,7 +2,7 @@ import {encode as base64Encode} from 'base-64'
 
 import {getItem} from './storeData'
 
-const url = 'https://96a2-92-50-180-214.ngrok-free.app'
+const url = 'https://a36f-92-50-180-214.ngrok-free.app'
 
 const fetchBalance = async () => {
   const username = 'admin'

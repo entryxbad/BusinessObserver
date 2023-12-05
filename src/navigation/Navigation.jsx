@@ -104,9 +104,7 @@ const Navigation = () => {
           <Stack.Screen
             name="RegistrationScreen"
             component={RegistrationScreen}
-            initialParams={{
-              onRegistrationSuccess: 'setIsRegisteredTrue',
-            }}
+            initialParams={{onRegistrationSuccess: () => setIsRegistered(true)}}
           />
         )}
         {isRegistered && <Stack.Screen name="MainTab" component={MainTab} />}

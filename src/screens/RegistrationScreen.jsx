@@ -1,4 +1,3 @@
-import {useNavigation, useRoute} from '@react-navigation/native'
 import {encode as base64Encode} from 'base-64'
 import React, {useEffect, useState} from 'react'
 import {Alert, Text, TextInput, TouchableOpacity, View} from 'react-native'
@@ -9,10 +8,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker'
 import {setItem} from '../config/storeData'
 import {registerDeviceUrl} from '../constants/Constants'
 
-const RegistrationScreen = () => {
-  const navigation = useNavigation()
-  const route = useRoute()
-
+const RegistrationScreen = ({route, navigation}) => {
   const {onRegistrationSuccess} = route.params || {}
 
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false)
@@ -95,16 +91,16 @@ const RegistrationScreen = () => {
           throw Error('Ошибка сети или сервера')
         }
       })
-      .then(data => {
-        console.log('Успешный ответ от сервера:', data)
+      .then(() => {
         if (onRegistrationSuccess) {
           // Сохраните информацию о регистрации в AsyncStorage
           setItem('isRegistered', 'true').then(() => {
             onRegistrationSuccess()
-            navigation.navigate('WaitScreen') // Переходим на WaitScreen
+            navigation.navigate('WaitScreen')
           })
         }
       })
+
       .catch(error => {
         console.error('Ошибка регистрации:', error)
         console.error('Ошибка сети или сервера:', error.message)
