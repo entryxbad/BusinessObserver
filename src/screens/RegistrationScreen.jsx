@@ -138,10 +138,23 @@ const RegistrationScreen = ({route, navigation}) => {
   }
 
   const handlePhoneNumberChange = text => {
-    // Заменяем только первую '8' на '+7', остальные '8' оставляем
-    const formattedNumber = text.replace(/^8/, '+7').replace(/(\D)8/g, '$1')
+    // Проверяем, начинается ли введенный номер с '+7'
+    if (text.startsWith('+7')) {
+      // Проверяем, есть ли восьмерка на четвёртом индексе
+      if (text.length > 4 && text[4] === '8') {
+        // Если восьмерка найдена, удаляем её
+        const formattedNumber = '+7' + text.slice(5)
 
-    setUser({...user, phoneNumber: formattedNumber})
+        // Устанавливаем новое значение в state или где у вас хранится номер
+        setUser({...user, phoneNumber: formattedNumber})
+      } else {
+        // Если восьмерки не найдено, оставляем номер без изменений
+        setUser({...user, phoneNumber: text})
+      }
+    } else {
+      // Если номер не начинается с '+7', оставляем его без изменений
+      setUser({...user, phoneNumber: text})
+    }
   }
 
   const showTimePicker = () => {
