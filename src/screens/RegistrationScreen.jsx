@@ -247,17 +247,18 @@ const RegistrationScreen = ({route, navigation}) => {
         keyboardType="phone-pad"
       />
       <TouchableOpacity
-        className="border-gray-300 border py-3 pl-5 w-54 rounded-3xl"
-        onPress={showTimePicker}>
+        onPress={showTimePicker}
+        className="border-gray-300 border py-3.5 pl-5 w-54 rounded-3xl">
         <Text className={selectedTime ? 'text-black' : 'text-gray-400'}>
           {selectedTime
-            ? selectedTime.toLocaleTimeString([], {
+            ? selectedTime.toLocaleTimeString('ru-RU', {
                 hour: '2-digit',
                 minute: '2-digit',
               })
             : 'Выберите время'}
         </Text>
       </TouchableOpacity>
+
       <TouchableOpacity
         className="mx-auto bg-[#0dd9e7] py-3 px-10 w-54 rounded-full mt-5"
         onPress={handleRegistration}>
@@ -276,6 +277,7 @@ const RegistrationScreen = ({route, navigation}) => {
         display="spinner"
         onConfirm={handleTimeConfirm}
         onCancel={hideTimePicker}
+        is24Hour={true}
       />
     </View>
   )
