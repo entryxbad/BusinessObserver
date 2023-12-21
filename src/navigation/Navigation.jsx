@@ -85,7 +85,7 @@ const Navigation = () => {
   const [isRegistered, setIsRegistered] = useState(false)
 
   useEffect(() => {
-    // Проверьте значение в AsyncStorage при запуске приложения
+    // Проверяет значение в AsyncStorage при запуске приложения
     getItem('isRegistered').then(value => {
       if (value === 'true') {
         setIsRegistered(true)

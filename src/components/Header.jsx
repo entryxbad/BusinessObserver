@@ -3,7 +3,7 @@ import {ArrowPathIcon, UserCircleIcon} from 'react-native-heroicons/outline'
 
 import {logo} from '../config/images'
 
-const Header = ({handleRefresh, navigation}) => {
+const Header = ({handleRefresh}) => {
   return (
     <View className="flex-row bg-white w-full h-11 shadow-sm mb-3 items-center justify-between px-2">
       <TouchableOpacity>
