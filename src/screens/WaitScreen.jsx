@@ -15,7 +15,7 @@ const WaitScreen = ({navigation}) => {
       // Сохраняем адрес сервера в AsyncStorage
       await setItem('serverAddress', serverAddress)
 
-      if (licenseData[0].serverAddress) {
+      if (licenseData[0].status === 'Действительна' && serverAddress) {
         navigation.navigate('MainTab')
       } else {
         Alert.alert('Ваша лицензия ещё не активирована.')

@@ -5,12 +5,14 @@ import DeviceInfo from 'react-native-device-info'
 import {TextInputMask} from 'react-native-masked-text'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
+import Loading from '../components/Loading'
 import {setItem} from '../config/storeData'
 import {registerDeviceUrl} from '../constants/Constants'
 
 const RegistrationScreen = ({route, navigation}) => {
   const {onRegistrationSuccess} = route.params || {}
 
+  const [isLoading, setIsLoading] = useState(false)
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false)
   const [selectedTime, setSelectedTime] = useState(null)
   const [isValid, setIsValid] = useState(true)
@@ -71,6 +73,7 @@ const RegistrationScreen = ({route, navigation}) => {
       Alert.alert('Внимание', 'Пожалуйста, заполните поля.')
       return
     }
+    setIsLoading(true)
 
     const username = 'admin'
     const password = '12345An'
@@ -106,6 +109,9 @@ const RegistrationScreen = ({route, navigation}) => {
       .catch(error => {
         console.error('Ошибка регистрации:', error)
         console.error('Ошибка сети или сервера:', error.message)
+      })
+      .finally(() => {
+        setIsLoading(false)
       })
   }
 
@@ -284,12 +290,18 @@ const RegistrationScreen = ({route, navigation}) => {
 
   return (
     <View className="flex-1 justify-center px-2">
-      <Text className="text-black text-bold text-3xl mx-auto mb-5">
-        Регистрация
-      </Text>
-      {step === 1 && renderStep1()}
-      {step === 2 && renderStep2()}
-      {step === 3 && renderStep3()}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <Text className="text-black text-bold text-3xl mx-auto mb-5">
+            Регистрация
+          </Text>
+          {step === 1 && renderStep1()}
+          {step === 2 && renderStep2()}
+          {step === 3 && renderStep3()}
+        </>
+      )}
     </View>
   )
 }
