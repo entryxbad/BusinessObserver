@@ -32,7 +32,7 @@ const RegistrationScreen = ({route, navigation}) => {
   })
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getDeviceData = async () => {
       try {
         const deviceId = await DeviceInfo.getUniqueId()
         const deviceName = await DeviceInfo.getDeviceName()
@@ -50,7 +50,7 @@ const RegistrationScreen = ({route, navigation}) => {
       }
     }
 
-    fetchData()
+    getDeviceData()
   }, [])
 
   const isStepValid = () => {
