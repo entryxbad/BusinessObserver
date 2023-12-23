@@ -13,6 +13,7 @@ import HomeScreen from '../screens/HomeScreen'
 import ReceiptsDetailScreen from '../screens/ReceiptsDetailScreen'
 import RegistrationScreen from '../screens/RegistrationScreen'
 import SalesDetailScreen from '../screens/SalesDetailScreen'
+import StartScreen from '../screens/StartScreen'
 import WaitScreen from '../screens/WaitScreen'
 
 const Tab = createBottomTabNavigator()
@@ -95,19 +96,22 @@ const Navigation = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{headerShown: false}}
-        initialRouteName="RegistrationScreen">
-        {isRegistered ? (
-          <Stack.Screen name="WaitScreen" component={WaitScreen} />
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        {!isRegistered ? (
+          <Stack.Screen name="StartScreen" component={StartScreen} />
         ) : (
-          <Stack.Screen
-            name="RegistrationScreen"
-            component={RegistrationScreen}
-            initialParams={{onRegistrationSuccess: () => setIsRegistered(true)}}
-          />
+          <>
+            <Stack.Screen name="WaitScreen" component={WaitScreen} />
+            <Stack.Screen name="MainTab" component={MainTab} />
+          </>
         )}
-        {isRegistered && <Stack.Screen name="MainTab" component={MainTab} />}
+        <Stack.Screen
+          name="RegistrationScreen"
+          component={RegistrationScreen}
+          initialParams={{
+            onRegistrationSuccess: () => setIsRegistered(true),
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   )
