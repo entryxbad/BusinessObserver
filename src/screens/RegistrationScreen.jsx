@@ -27,21 +27,30 @@ const RegistrationScreen = ({route, navigation}) => {
     phoneNumber: '',
     time: '',
     organization: '',
+    deviceName: '',
     configuration: 'БухгалтерияПредприятия',
   })
 
   useEffect(() => {
-    DeviceInfo.getUniqueId()
-      .then(deviceId => {
-        setUser({...user, id: deviceId})
+    const fetchData = async () => {
+      try {
+        const deviceId = await DeviceInfo.getUniqueId()
+        const deviceName = await DeviceInfo.getDeviceName()
+
+        setUser({
+          ...user,
+          id: deviceId,
+          deviceName: deviceName,
+        })
+
         setItem('deviceUniqueId', deviceId)
-      })
-      .catch(error => {
-        console.error(
-          'Ошибка получения уникального идентификатора устройства:',
-          error,
-        )
-      })
+        setItem('deviceName', deviceName)
+      } catch (error) {
+        console.error('Ошибка получения информации об устройстве:', error)
+      }
+    }
+
+    fetchData()
   }, [])
 
   const isStepValid = () => {
