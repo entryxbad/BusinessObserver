@@ -18,7 +18,7 @@ const WaitScreen = ({navigation}) => {
       if (licenseData[0].status === 'Действительна' && serverAddress) {
         navigation.navigate('MainTab')
       } else {
-        Alert.alert('Ваша лицензия ещё не активирована.')
+        Alert.alert('Ваше устройство пока не зарегистрировано')
       }
     } catch (error) {
       console.error('Ошибка при проверке лицензии:', error)

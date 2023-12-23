@@ -26,6 +26,7 @@ const RegistrationScreen = ({route, navigation}) => {
     email: '',
     phoneNumber: '',
     time: '',
+    organization: '',
     configuration: 'БухгалтерияПредприятия',
   })
 
@@ -202,6 +203,12 @@ const RegistrationScreen = ({route, navigation}) => {
 
   const renderStep2 = () => (
     <View>
+      <TextInput
+        className="border-gray-300 border rounded-full pl-5 mb-5"
+        placeholder="Название организации"
+        value={user.organization}
+        onChangeText={text => setUser({...user, organization: text})}
+      />
       <TextInput
         className="border-gray-300 border rounded-full pl-5 mb-5"
         placeholder="ИНН"
