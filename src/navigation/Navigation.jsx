@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import React, {useEffect, useState} from 'react'
 import {HomeIcon} from 'react-native-heroicons/outline'
 import {ChartPieIcon} from 'react-native-heroicons/outline'
+import {DocumentTextIcon} from 'react-native-heroicons/outline'
 
 import {getItem} from '../config/storeData'
 import BalanceDetailScreen from '../screens/BalanceDetailScreen'
@@ -12,6 +13,7 @@ import GraphicScreen from '../screens/GraphicScreen'
 import HomeScreen from '../screens/HomeScreen'
 import ReceiptsDetailScreen from '../screens/ReceiptsDetailScreen'
 import RegistrationScreen from '../screens/RegistrationScreen'
+import RetailScreen from '../screens/RetailScreen'
 import SalesDetailScreen from '../screens/SalesDetailScreen'
 import StartScreen from '../screens/StartScreen'
 import WaitScreen from '../screens/WaitScreen'
@@ -21,6 +23,10 @@ const Stack = createNativeStackNavigator()
 
 const HomeTab = ({navigation}) => {
   return <HomeScreen navigation={navigation} />
+}
+
+const RetailTab = () => {
+  return <RetailScreen />
 }
 
 const GraphicTab = () => {
@@ -68,6 +74,15 @@ const MainTab = () => (
         headerShown: false,
         tabBarLabel: () => null,
         tabBarIcon: () => <HomeIcon color={'black'} size={28} />,
+      }}
+    />
+    <Tab.Screen
+      name="RetailTab"
+      component={RetailTab}
+      options={{
+        headerShown: false,
+        tabBarLabel: () => null,
+        tabBarIcon: () => <DocumentTextIcon color={'black'} size={28} />,
       }}
     />
     <Tab.Screen
