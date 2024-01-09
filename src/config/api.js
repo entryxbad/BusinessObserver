@@ -98,6 +98,28 @@ const fetchLicense2 = async () => {
   }
 }
 
+const fetchRetailOrgs = async () => {
+  const username = 'admin'
+
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      Authorization: `Basic ${base64Encode(username)}`,
+    },
+  }
+
+  try {
+    const response = await fetch(`${url}/ut/hs/mobile/orp`, requestOptions)
+    if (!response.ok) {
+      throw new Error('Error from fetchRetailOrgs')
+    }
+    const data = await response.json()
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 export {
   fetchBalance,
   fetchReceipts,
@@ -110,4 +132,5 @@ export {
   fetchSalesChart,
   fetchLicense1,
   fetchLicense2,
+  fetchRetailOrgs,
 }
