@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {ScrollView, View} from 'react-native'
+import {ScrollView, SafeAreaView} from 'react-native'
 
 import Balance from '../components/Balance'
 import Consumption from '../components/Consumption'
@@ -14,7 +14,7 @@ const HomeScreen = ({navigation}) => {
     setRefreshKey(prevKey => prevKey + 1)
   }
   return (
-    <View className="bg-[#f5f5f5] flex-1 relative">
+    <SafeAreaView className="bg-[#f5f5f5] flex-1 relative">
       <Header handleRefresh={handleRefresh} navigation={navigation} />
       <ScrollView>
         <Balance navigation={navigation} refreshKey={refreshKey} />
@@ -22,7 +22,7 @@ const HomeScreen = ({navigation}) => {
         <Consumption navigation={navigation} refreshKey={refreshKey} />
         <Sales navigation={navigation} refreshKey={refreshKey} />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 

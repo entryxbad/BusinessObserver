@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Dimensions, ScrollView, Text, View} from 'react-native'
+import {Dimensions, ScrollView, Text, SafeAreaView} from 'react-native'
 import {LineChart} from 'react-native-chart-kit'
 
 import Loading from '../components/Loading'
@@ -46,7 +46,7 @@ const GraphicScreen = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <View className="flex-1 items-center">
+        <SafeAreaView className="flex-1 items-center">
           <Text className="mt-5">Продажи</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <LineChart
@@ -91,7 +91,7 @@ const GraphicScreen = () => {
               }}
             />
           </ScrollView>
-        </View>
+        </SafeAreaView>
       )}
     </ScrollView>
   )

@@ -2,7 +2,7 @@ import {encode as base64Encode} from 'base-64'
 
 import {getItem} from './storeData'
 
-const url = 'https://454c-92-50-180-214.ngrok-free.app'
+const url = 'https://106d-92-50-180-214.ngrok-free.app'
 
 const createFetchRequest = async (path, code = '') => {
   const storedServerAddress = await getItem('serverAddress')
