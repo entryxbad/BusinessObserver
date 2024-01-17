@@ -4,6 +4,7 @@ import {ScrollView, Text, View, SafeAreaView} from 'react-native'
 import Loading from '../components/Loading'
 import {fetchRetailOrgs} from '../config/api'
 import {formatBalance} from '../config/functions'
+// import { Header } from '@react-navigation/stack'
 
 const RetailScreen = () => {
   const [retailDetail, setRetailDetail] = useState([])
@@ -23,6 +24,7 @@ const RetailScreen = () => {
     updateRetailOrgs()
   }, [])
 
+
   return (
     <>
       {isLoading ? (
@@ -31,18 +33,19 @@ const RetailScreen = () => {
         <ScrollView className="flex-1 px-2 mb-1">
           {/* Остальной контент */}
           {retailDetail.map((item, index) => (
-            <SafeAreaView className="mt-2" key={index}>
+            <View className="mt-2" key={index}>
               <View className="flex-1 justify-between bg-white border border-gray-300 p-2 mt-2">
-                <Text className="text-gray-400 text-lg">{item.Магазин}</Text>
+                <Text className="text-gray-400 text-lg">{item.magazine}</Text>
                 <View className="flex-row items-center justify-between">
                   <Text className="text-black text-lg font-bold">
-                    {formatBalance(item.СуммаДокумента)} {'\u20BD'}
+                    {formatBalance(item.sum)} {'\u20BD'}
                   </Text>
                 </View>
               </View>
-            </SafeAreaView>
+            </View>
           ))}
         </ScrollView>
+        
       )}
     </>
   )

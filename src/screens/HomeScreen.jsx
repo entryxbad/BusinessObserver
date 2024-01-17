@@ -15,7 +15,7 @@ const HomeScreen = ({navigation}) => {
   }
   return (
     <SafeAreaView className="bg-[#f5f5f5] flex-1 relative">
-      <Header handleRefresh={handleRefresh} navigation={navigation} />
+      <Header handleRefresh={handleRefresh} />
       <ScrollView>
         <Balance navigation={navigation} refreshKey={refreshKey} />
         <Receipts navigation={navigation} refreshKey={refreshKey} />
