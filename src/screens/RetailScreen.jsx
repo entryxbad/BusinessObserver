@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react'
 import {ScrollView, Text, View, SafeAreaView} from 'react-native'
 
+import Header from '../components/Header'
 import Loading from '../components/Loading'
 import {fetchRetailOrgs} from '../config/api'
 import {formatBalance} from '../config/functions'
-// import { Header } from '@react-navigation/stack'
 
 const RetailScreen = () => {
   const [retailDetail, setRetailDetail] = useState([])
@@ -20,6 +20,11 @@ const RetailScreen = () => {
     }
   }
 
+  const handleRefresh = () => {
+    setIsLoading(true)
+    updateRetailOrgs()
+  };
+
   useEffect(() => {
     updateRetailOrgs()
   }, [])
@@ -30,6 +35,8 @@ const RetailScreen = () => {
       {isLoading ? (
         <Loading />
       ) : (
+        <SafeAreaView className='flex-1'>
+          <Header handleRefresh={handleRefresh} />
         <ScrollView className="flex-1 px-2 mb-1">
           {/* Остальной контент */}
           {retailDetail.map((item, index) => (
@@ -45,7 +52,7 @@ const RetailScreen = () => {
             </View>
           ))}
         </ScrollView>
-        
+        </SafeAreaView>
       )}
     </>
   )
